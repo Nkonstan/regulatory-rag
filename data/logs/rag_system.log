@@ -1,0 +1,636 @@
+2026-02-13 10:18:10 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:71 | ======================================================================
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:72 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:73 | ======================================================================
+2026-02-13 10:18:10 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-13 10:18:10 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-13 10:18:10 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:79 | ======================================================================
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:80 | 📊 STARTUP SUMMARY:
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:81 |    📁 Total PDFs found: 3
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:82 |    ✅ Newly processed: 0
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:83 |    ⏭️  Already in database: 3
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:84 |    💾 Total chunks in database: 0
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:89 | ======================================================================
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:90 | 🎯 System Ready!
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:91 |    • API: http://localhost:8000
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:92 |    • Docs: http://localhost:8000/docs
+2026-02-13 10:18:10 | [32mINFO[0m | app.main | startup_event:93 | ======================================================================
+2026-02-13 10:24:27 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-13 10:24:27 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-13 10:24:27 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-13 10:24:27 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-13 10:24:27 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-13 10:44:25 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-13 10:44:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-13 10:44:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-13 10:44:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-13 10:44:25 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-13 10:52:06 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-13 10:52:06 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-13 10:52:06 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-13 10:52:06 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-13 10:52:06 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-13 10:52:06 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-13 10:52:06 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-13 10:52:06 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-13 10:52:06 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E10 - Document 3.pdf
+2026-02-13 10:52:06 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 45 chunks from E10 - Document 3.pdf
+2026-02-13 10:53:24 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 45 embeddings
+2026-02-13 10:53:24 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-13 10:53:24 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 45 chunks for E10 - Document 3.pdf
+2026-02-13 10:53:24 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-13 10:53:24 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 23 sections from ICD - Document 1.pdf
+2026-02-13 10:53:24 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 91 chunks from ICD - Document 1.pdf
+2026-02-13 10:56:06 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 91 embeddings
+2026-02-13 10:56:07 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 91 chunks for ICD - Document 1.pdf
+2026-02-13 10:56:07 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-13 10:56:07 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 1 sections from E3 Structure - Document 2.pdf
+2026-02-13 10:56:07 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 10 chunks from E3 Structure - Document 2.pdf
+2026-02-13 10:56:25 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 10 embeddings
+2026-02-13 10:56:25 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 10 chunks for E3 Structure - Document 2.pdf
+2026-02-13 10:56:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 146, 'database_chunks': 146}
+2026-02-13 10:56:25 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-13 10:56:25 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-13 10:56:25 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-13 10:56:25 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-13 10:56:25 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 146
+2026-02-13 10:56:25 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-13 10:58:37 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is a placebo control trial?'
+2026-02-13 10:58:37 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-13 10:59:37 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.45)
+2026-02-13 11:06:04 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the ICH step number at which this E10 guidance was endorsed?'
+2026-02-13 11:06:56 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.84)
+2026-02-13 11:08:28 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What are the five types of control groups described in this guidance?'
+2026-02-13 11:08:33 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.84)
+2026-02-13 11:09:43 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is assay sensitivity and why is it important in non-inferiority trials?'
+2026-02-13 11:10:05 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.89)
+2026-02-13 11:12:17 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the difference between a placebo-controlled trial and a no-treatment concurrent control trial?'
+2026-02-13 11:12:23 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.89)
+2026-02-13 11:15:38 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Under what circumstances is it ethical to use a placebo control, and when is it not ethical?'
+2026-02-13 11:15:43 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.89)
+2026-02-13 11:16:50 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Explain the concept of a non-inferiority margin and how it should be chosen.'
+2026-02-13 11:16:56 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-13 11:18:00 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What design modifications can make placebo-controlled trials more ethical when effective treatment exists?'
+2026-02-13 11:18:04 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.90)
+2026-02-13 11:19:05 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What design modifications can make placebo-controlled trials more ethical when effective treatment exists?'
+2026-02-13 11:19:08 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.90)
+2026-02-13 11:19:28 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Can a baseline-controlled study (comparing patient status on therapy vs before therapy) be considered a controlled trial?'
+2026-02-13 11:19:32 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.88)
+2026-02-13 11:20:14 | [32mINFO[0m | app.main | query_documents:140 | Query: 'If an active control trial shows no difference between the test drug and the control drug, can this prove the test drug is effective?'
+2026-02-13 11:20:19 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.89)
+2026-02-13 11:21:12 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to Table 1, can a dose-response concurrent control study measure absolute effect size?'
+2026-02-13 11:21:15 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.87)
+2026-02-13 11:45:09 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-13 11:45:24 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-13 11:46:00 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E10 document?'
+2026-02-13 11:46:03 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-13 11:46:46 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the full title of this E10 guidance document?'
+2026-02-13 11:46:49 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-13 11:48:44 | [32mINFO[0m | app.main | query_documents:140 | Query: 'In which year was the E10 guidance endorsed at Step 4?'
+2026-02-13 11:48:48 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-13 11:49:55 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What does the Arabic number 2 represent in the organizational breakdown noted in the E10 guidance?'
+2026-02-13 11:49:58 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-13 11:51:21 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Does the E10 guidance discuss dose-response studies?'
+2026-02-13 11:51:24 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.85)
+2026-02-13 11:52:09 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to E10 specifically, what is the purpose of a control group?'
+2026-02-13 11:52:14 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.83)
+2026-02-13 11:52:50 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How many main sections does the E10 guidance have according to its table of contents?'
+2026-02-13 11:52:54 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.80)
+2026-02-13 11:54:05 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to Table 1, can a dose-response concurrent control study measure absolute effect size?'
+2026-02-13 11:54:09 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.87)
+2026-02-13 22:14:58 | [32mINFO[0m | app.main | query_documents:140 | Query: 'List all documents in the database'
+2026-02-13 22:15:15 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.72)
+2026-02-13 23:44:42 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-13 23:44:42 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-13 23:44:42 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-13 23:44:42 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-13 23:44:42 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-13 23:48:52 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-13 23:48:53 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-13 23:55:04 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-13 23:55:04 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-13 23:55:04 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-13 23:55:04 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-13 23:55:04 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-13 23:55:04 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-13 23:55:04 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-13 23:55:04 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-13 23:55:04 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E10 - Document 3.pdf
+2026-02-13 23:55:04 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 45 chunks from E10 - Document 3.pdf
+2026-02-13 23:56:22 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 45 embeddings
+2026-02-13 23:56:22 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-13 23:56:22 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 45 chunks for E10 - Document 3.pdf
+2026-02-13 23:56:22 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-13 23:56:22 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 23 sections from ICD - Document 1.pdf
+2026-02-13 23:56:22 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 91 chunks from ICD - Document 1.pdf
+2026-02-13 23:59:06 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 91 embeddings
+2026-02-13 23:59:06 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 91 chunks for ICD - Document 1.pdf
+2026-02-13 23:59:06 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-13 23:59:06 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 1 sections from E3 Structure - Document 2.pdf
+2026-02-13 23:59:06 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 10 chunks from E3 Structure - Document 2.pdf
+2026-02-13 23:59:22 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 10 embeddings
+2026-02-13 23:59:22 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 10 chunks for E3 Structure - Document 2.pdf
+2026-02-13 23:59:22 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 146, 'database_chunks': 146}
+2026-02-13 23:59:22 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-13 23:59:22 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-13 23:59:22 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-13 23:59:22 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-13 23:59:22 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 146
+2026-02-13 23:59:22 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-13 23:59:46 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-13 23:59:46 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 00:00:46 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.40)
+2026-02-14 00:01:04 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E10 document?'
+2026-02-14 00:01:54 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-14 00:03:57 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 00:04:01 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-14 00:04:22 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 00:04:24 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-14 00:04:51 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 00:04:52 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-14 00:05:17 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 00:05:18 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-14 00:05:26 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E10 document?'
+2026-02-14 00:05:29 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-14 00:05:39 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the full title of this E10 guidance document?'
+2026-02-14 00:05:41 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-14 00:05:50 | [32mINFO[0m | app.main | query_documents:140 | Query: 'In which year was the E10 guidance endorsed at Step 4?'
+2026-02-14 00:05:53 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-14 00:06:00 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What does the Arabic number 2 represent in the organizational breakdown noted in the E10 guidance?'
+2026-02-14 00:06:03 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-14 00:06:16 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Does the E10 guidance discuss dose-response studies?'
+2026-02-14 00:06:20 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.85)
+2026-02-14 00:06:42 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to E10 specifically, what is the purpose of a control group?'
+2026-02-14 00:06:45 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.83)
+2026-02-14 00:06:54 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to E10 specifically, what is the purpose of a control group?'
+2026-02-14 00:06:56 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.83)
+2026-02-14 00:07:13 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How many main sections does the E10 guidance have according to its table of contents?'
+2026-02-14 00:07:16 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.80)
+2026-02-14 00:07:44 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to Table 1, can a dose-response concurrent control study measure absolute effect size?'
+2026-02-14 00:07:47 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.87)
+2026-02-14 11:03:06 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 11:03:06 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 11:03:06 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 11:03:06 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-14 11:03:06 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 11:11:00 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 11:11:00 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 11:11:00 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 11:11:00 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 11:11:00 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 11:11:00 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 11:11:00 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-14 11:11:00 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-14 11:11:00 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 9 sections from E10 - Document 3.pdf
+2026-02-14 11:11:00 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 50 chunks from E10 - Document 3.pdf
+2026-02-14 11:12:18 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 50 embeddings
+2026-02-14 11:12:18 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 11:12:18 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 50 chunks for E10 - Document 3.pdf
+2026-02-14 11:12:18 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-14 11:12:18 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 9 sections from ICD - Document 1.pdf
+2026-02-14 11:12:18 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 83 chunks from ICD - Document 1.pdf
+2026-02-14 11:14:29 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 83 embeddings
+2026-02-14 11:14:29 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 83 chunks for ICD - Document 1.pdf
+2026-02-14 11:14:29 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-14 11:14:29 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 1 sections from E3 Structure - Document 2.pdf
+2026-02-14 11:14:29 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 10 chunks from E3 Structure - Document 2.pdf
+2026-02-14 11:14:44 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 10 embeddings
+2026-02-14 11:14:44 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 10 chunks for E3 Structure - Document 2.pdf
+2026-02-14 11:14:44 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 143, 'database_chunks': 143}
+2026-02-14 11:14:44 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 11:14:44 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 11:14:44 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 11:14:44 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-14 11:14:44 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 143
+2026-02-14 11:14:44 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 11:15:14 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to Table 1, can a dose-response concurrent control study measure absolute effect size?'
+2026-02-14 11:15:14 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 11:16:14 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.44)
+2026-02-14 11:25:04 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 11:25:04 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 11:25:04 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 11:25:04 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-14 11:25:04 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 11:25:30 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 11:25:30 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 11:25:30 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 11:25:30 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-14 11:25:30 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 11:27:26 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 11:27:26 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 11:27:26 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 11:27:26 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 11:27:26 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 11:27:26 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 11:27:26 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-14 11:27:26 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-14 11:27:26 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 1 sections from E10 - Document 3.pdf
+2026-02-14 11:27:26 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 45 chunks from E10 - Document 3.pdf
+2026-02-14 11:28:43 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 45 embeddings
+2026-02-14 11:28:43 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 11:28:43 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 45 chunks for E10 - Document 3.pdf
+2026-02-14 11:28:43 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-14 11:28:43 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 10 sections from ICD - Document 1.pdf
+2026-02-14 11:28:43 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 82 chunks from ICD - Document 1.pdf
+2026-02-14 11:31:18 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 82 embeddings
+2026-02-14 11:31:18 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 82 chunks for ICD - Document 1.pdf
+2026-02-14 11:31:18 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-14 11:31:18 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 1 sections from E3 Structure - Document 2.pdf
+2026-02-14 11:31:18 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-14 11:31:36 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-14 11:31:36 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-14 11:31:36 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 138, 'database_chunks': 138}
+2026-02-14 11:31:36 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 11:31:36 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 11:31:36 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 11:31:36 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-14 11:31:36 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 138
+2026-02-14 11:31:36 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 11:37:49 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 11:37:49 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 11:37:49 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 11:37:49 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 11:37:49 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 11:37:49 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 11:37:49 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-14 11:37:49 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-14 11:37:49 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 66 sections from E10 - Document 3.pdf
+2026-02-14 11:37:49 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 84 chunks from E10 - Document 3.pdf
+2026-02-14 11:39:12 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 84 embeddings
+2026-02-14 11:39:12 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 11:39:12 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 84 chunks for E10 - Document 3.pdf
+2026-02-14 11:39:12 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-14 11:39:12 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 47 sections from ICD - Document 1.pdf
+2026-02-14 11:39:12 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 101 chunks from ICD - Document 1.pdf
+2026-02-14 11:41:34 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 101 embeddings
+2026-02-14 11:41:34 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 101 chunks for ICD - Document 1.pdf
+2026-02-14 11:41:34 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-14 11:41:34 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E3 Structure - Document 2.pdf
+2026-02-14 11:41:34 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-14 11:41:52 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-14 11:41:52 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-14 11:41:52 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 196, 'database_chunks': 196}
+2026-02-14 11:41:52 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 11:41:52 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 11:41:52 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 11:41:52 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-14 11:41:52 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 196
+2026-02-14 11:41:52 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 11:47:32 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 11:47:32 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 11:48:33 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.40)
+2026-02-14 11:48:55 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 11:49:38 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-14 18:11:13 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 18:11:13 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 18:11:13 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 18:11:13 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 18:11:13 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 18:11:13 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 18:11:13 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-14 18:11:13 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-14 18:11:13 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 66 sections from E10 - Document 3.pdf
+2026-02-14 18:11:13 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 84 chunks from E10 - Document 3.pdf
+2026-02-14 18:12:59 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 84 embeddings
+2026-02-14 18:12:59 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 18:12:59 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 84 chunks for E10 - Document 3.pdf
+2026-02-14 18:12:59 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-14 18:12:59 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 47 sections from ICD - Document 1.pdf
+2026-02-14 18:12:59 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 101 chunks from ICD - Document 1.pdf
+2026-02-14 18:15:26 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 101 embeddings
+2026-02-14 18:15:27 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 101 chunks for ICD - Document 1.pdf
+2026-02-14 18:15:27 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-14 18:15:27 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E3 Structure - Document 2.pdf
+2026-02-14 18:15:27 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-14 18:15:44 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-14 18:15:44 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-14 18:15:44 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 196, 'database_chunks': 196}
+2026-02-14 18:15:44 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 18:15:44 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 18:15:44 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 18:15:44 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-14 18:15:44 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 196
+2026-02-14 18:15:44 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 18:27:34 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 18:29:44 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 18:29:44 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 18:29:44 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 18:29:44 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 18:29:44 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 18:29:44 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 18:29:44 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-14 18:29:44 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-14 18:29:44 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 77 sections from E10 - Document 3.pdf
+2026-02-14 18:29:44 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 84 chunks from E10 - Document 3.pdf
+2026-02-14 18:31:04 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 84 embeddings
+2026-02-14 18:31:04 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 18:31:04 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 84 chunks for E10 - Document 3.pdf
+2026-02-14 18:31:04 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-14 18:31:04 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 48 sections from ICD - Document 1.pdf
+2026-02-14 18:31:04 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 101 chunks from ICD - Document 1.pdf
+2026-02-14 18:33:26 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 101 embeddings
+2026-02-14 18:33:26 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 101 chunks for ICD - Document 1.pdf
+2026-02-14 18:33:26 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-14 18:33:26 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E3 Structure - Document 2.pdf
+2026-02-14 18:33:26 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-14 18:33:44 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-14 18:33:44 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-14 18:33:44 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 196, 'database_chunks': 196}
+2026-02-14 18:33:44 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 18:33:44 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 18:33:44 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 18:33:44 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-14 18:33:44 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 196
+2026-02-14 18:33:44 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 18:47:57 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 18:47:57 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 18:47:57 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 18:47:57 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 18:47:57 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 18:47:57 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 18:47:57 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-14 18:47:57 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-14 18:47:57 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 77 sections from E10 - Document 3.pdf
+2026-02-14 18:47:57 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 84 chunks from E10 - Document 3.pdf
+2026-02-14 18:49:43 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 84 embeddings
+2026-02-14 18:49:43 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 18:49:43 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 84 chunks for E10 - Document 3.pdf
+2026-02-14 18:49:43 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-14 18:49:43 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 48 sections from ICD - Document 1.pdf
+2026-02-14 18:49:43 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 101 chunks from ICD - Document 1.pdf
+2026-02-14 18:52:33 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 101 embeddings
+2026-02-14 18:52:33 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 101 chunks for ICD - Document 1.pdf
+2026-02-14 18:52:33 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-14 18:52:33 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E3 Structure - Document 2.pdf
+2026-02-14 18:52:33 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-14 18:52:55 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-14 18:52:55 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-14 18:52:55 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 196, 'database_chunks': 196}
+2026-02-14 18:52:55 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 18:52:55 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 18:52:55 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 18:52:55 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-14 18:52:55 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 196
+2026-02-14 18:52:55 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-14 19:05:26 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 19:05:27 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-14 19:06:27 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.40)
+2026-02-14 19:06:43 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-14 19:07:26 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-14 19:12:32 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E10 document?'
+2026-02-14 19:12:39 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-14 19:13:00 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the full title of this E10 guidance document?'
+2026-02-14 19:13:03 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-14 19:13:22 | [32mINFO[0m | app.main | query_documents:140 | Query: 'In which year was the E10 guidance endorsed at Step 4?'
+2026-02-14 19:13:25 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-14 19:13:39 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Does the E10 guidance discuss dose-response studies?'
+2026-02-14 19:13:41 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.86)
+2026-02-14 22:09:46 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-14 22:09:46 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-14 22:09:46 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-14 22:09:46 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-14 22:09:46 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-15 10:38:25 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-15 10:38:25 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-15 10:38:25 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-15 10:38:25 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-15 10:38:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-15 10:38:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-15 10:38:25 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-15 10:38:25 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-15 10:38:25 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 77 sections from E10 - Document 3.pdf
+2026-02-15 10:38:25 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 84 chunks from E10 - Document 3.pdf
+2026-02-15 10:39:45 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 84 embeddings
+2026-02-15 10:39:45 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-15 10:39:45 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 84 chunks for E10 - Document 3.pdf
+2026-02-15 10:39:45 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-15 10:39:45 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 48 sections from ICD - Document 1.pdf
+2026-02-15 10:39:45 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 101 chunks from ICD - Document 1.pdf
+2026-02-15 10:41:55 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 101 embeddings
+2026-02-15 10:41:56 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 101 chunks for ICD - Document 1.pdf
+2026-02-15 10:41:56 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-15 10:41:56 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E3 Structure - Document 2.pdf
+2026-02-15 10:41:56 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-15 10:42:15 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-15 10:42:15 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-15 10:42:15 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 196, 'database_chunks': 196}
+2026-02-15 10:42:15 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-15 10:42:15 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-15 10:42:15 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-15 10:42:15 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-15 10:42:15 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 196
+2026-02-15 10:42:15 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-15 10:42:24 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-15 10:42:25 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-15 10:43:25 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.40)
+2026-02-15 10:43:38 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-15 10:44:03 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-15 10:44:33 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E10 document?'
+2026-02-15 10:44:36 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-15 10:45:16 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the full title of this E10 guidance document?'
+2026-02-15 10:45:18 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-15 10:45:37 | [32mINFO[0m | app.main | query_documents:140 | Query: 'In which year was the E10 guidance endorsed at Step 4?'
+2026-02-15 10:45:40 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-15 10:45:46 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What does the Arabic number 2 represent in the organizational breakdown noted in the E10 guidance?'
+2026-02-15 10:45:49 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-15 10:45:56 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Does the E10 guidance discuss dose-response studies?'
+2026-02-15 10:45:58 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.86)
+2026-02-15 10:46:07 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to E10 specifically, what is the purpose of a control group?'
+2026-02-15 10:46:10 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-15 11:13:12 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-15 11:13:12 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-15 11:13:12 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-15 11:13:12 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:148 | All 3 PDFs already processed
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 0
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 0
+2026-02-15 11:13:12 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-15 11:33:56 | [32mINFO[0m | root | setup_logging:77 | Logging configured successfully
+2026-02-15 11:33:56 | [32mINFO[0m | app.main | startup_event:45 | ======================================================================
+2026-02-15 11:33:56 | [32mINFO[0m | app.main | startup_event:46 | 🚀 PHARMACEUTICAL RAG SYSTEM - STARTUP
+2026-02-15 11:33:56 | [32mINFO[0m | app.main | startup_event:47 | ======================================================================
+2026-02-15 11:33:56 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:127 | Starting PDF auto-processing on startup
+2026-02-15 11:33:56 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:141 | Found 3 PDF files
+2026-02-15 11:33:56 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:157 | Processing 3 new PDFs
+2026-02-15 11:33:56 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E10 - Document 3.pdf
+2026-02-15 11:33:56 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 77 sections from E10 - Document 3.pdf
+2026-02-15 11:33:56 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 84 chunks from E10 - Document 3.pdf
+2026-02-15 11:35:14 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 84 embeddings
+2026-02-15 11:35:15 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+2026-02-15 11:35:15 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 84 chunks for E10 - Document 3.pdf
+2026-02-15 11:35:15 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: ICD - Document 1.pdf
+2026-02-15 11:35:15 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 48 sections from ICD - Document 1.pdf
+2026-02-15 11:35:15 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 101 chunks from ICD - Document 1.pdf
+2026-02-15 11:37:29 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 101 embeddings
+2026-02-15 11:37:29 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 101 chunks for ICD - Document 1.pdf
+2026-02-15 11:37:29 | [32mINFO[0m | app.services.document_service | process_pdf:78 | Processing PDF: E3 Structure - Document 2.pdf
+2026-02-15 11:37:29 | [32mINFO[0m | app.services.document_service | process_pdf:84 | Extracted 2 sections from E3 Structure - Document 2.pdf
+2026-02-15 11:37:29 | [32mINFO[0m | app.services.document_service | process_pdf:89 | Created 11 chunks from E3 Structure - Document 2.pdf
+2026-02-15 11:37:46 | [32mINFO[0m | app.services.document_service | process_pdf:95 | Generated 11 embeddings
+2026-02-15 11:37:46 | [32mINFO[0m | app.services.document_service | process_pdf:100 | Successfully stored 11 chunks for E3 Structure - Document 2.pdf
+2026-02-15 11:37:46 | [32mINFO[0m | app.services.document_service | process_startup_pdfs:179 | Startup processing complete: {'total_files': 3, 'processed': 3, 'skipped': 0, 'failed': 0, 'total_chunks': 196, 'database_chunks': 196}
+2026-02-15 11:37:46 | [32mINFO[0m | app.main | startup_event:51 | ======================================================================
+2026-02-15 11:37:46 | [32mINFO[0m | app.main | startup_event:52 | 📊 STARTUP SUMMARY:
+2026-02-15 11:37:46 | [32mINFO[0m | app.main | startup_event:53 |    📁 Total PDFs: 3
+2026-02-15 11:37:46 | [32mINFO[0m | app.main | startup_event:54 |    ✅ Processed: 3
+2026-02-15 11:37:46 | [32mINFO[0m | app.main | startup_event:55 |    💾 Total chunks: 196
+2026-02-15 11:37:46 | [32mINFO[0m | app.main | startup_event:56 | ======================================================================
+2026-02-15 11:38:02 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-15 11:38:02 | [31mERROR[0m | chromadb.telemetry.product.posthog | _direct_capture:59 | Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+2026-02-15 11:39:02 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.35)
+2026-02-15 11:39:21 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E10 guidance?'
+2026-02-15 11:39:45 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.59)
+2026-02-15 11:39:57 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E10 document?'
+2026-02-15 11:40:01 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.61)
+2026-02-15 11:45:02 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the full title of this E10 guidance document?'
+2026-02-15 11:45:07 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.65)
+2026-02-15 11:45:40 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What does the Arabic number 2 represent in the organizational breakdown noted in the E10 guidance?'
+2026-02-15 11:45:43 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.74)
+2026-02-15 11:45:53 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Does the E10 guidance discuss dose-response studies?'
+2026-02-15 11:45:56 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.56)
+2026-02-15 11:46:07 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to E10 specifically, what is the purpose of a control group?'
+2026-02-15 11:46:09 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.75)
+2026-02-15 11:46:21 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How many main sections does the E10 guidance have according to its table of contents?'
+2026-02-15 11:46:24 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.74)
+2026-02-15 11:46:35 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to Table 1, can a dose-response concurrent control study measure absolute effect size?'
+2026-02-15 11:46:37 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.75)
+2026-02-15 11:48:45 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the publication date of the E 10 guidance?'
+2026-02-15 11:48:48 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.67)
+2026-02-15 11:49:29 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Which centers are listed on the title page of the E 10 document?'
+2026-02-15 11:49:33 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.70)
+2026-02-15 11:50:30 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the full title of this E 10 guidance document?'
+2026-02-15 11:50:33 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.63)
+2026-02-15 11:50:54 | [32mINFO[0m | app.main | query_documents:140 | Query: 'In which year was the E 10 guidance endorsed at Step 4?'
+2026-02-15 11:50:57 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.76)
+2026-02-15 11:51:39 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What does the Arabic number 2 represent in the organizational breakdown noted in the E 10 guidance?'
+2026-02-15 11:51:42 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-15 11:52:20 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Does the E 10 guidance discuss dose-response studies?'
+2026-02-15 11:52:23 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.56)
+2026-02-15 11:52:40 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to E 10 specifically, what is the purpose of a control group?'
+2026-02-15 11:52:43 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.63)
+2026-02-15 11:53:17 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How many main sections does the E 10 guidance have according to its table of contents?'
+2026-02-15 11:53:19 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-15 11:54:07 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to Table 1, can a dose-response concurrent control study measure absolute effect size?'
+2026-02-15 11:54:09 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.75)
+2026-02-15 12:17:23 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Is the ICH E3 guidance considered a rigid, mandatory template for Clinical Study Reports (CSRs)?'
+2026-02-15 12:17:31 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.72)
+2026-02-15 12:17:39 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How should a sponsor handle sections or topics that are not addressed in the ICH E3 guidance or do not have a specified location?'
+2026-02-15 12:17:43 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.91)
+2026-02-15 12:17:48 | [32mINFO[0m | app.main | query_documents:140 | Query: 'If a sponsor decides to reorder or rename sections presented in the ICH E3 guidance, is a formal rationale required in the report?'
+2026-02-15 12:17:51 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-15 12:17:55 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How does the ICH M4E guidance change the recommended length of a CSR synopsis compared to the original ICH E3 guidance?'
+2026-02-15 12:17:58 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.84)
+2026-02-15 12:18:05 | [32mINFO[0m | app.main | query_documents:140 | Query: 'If a document is already available in the Trial Master File (TMF), is it still necessary to include it in the CSR appendices?'
+2026-02-15 12:18:09 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 1.00)
+2026-02-15 12:18:16 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Name three specific documents that should always be included in the trial report for reviewer assessment, regardless of their presence in the TMF.'
+2026-02-15 12:18:18 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 1.00)
+2026-02-15 12:18:31 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What are the two main options provided for submitting data on topics not mentioned in the original ICH E3, such as pharmacogenomics or biomarkers, within an eCTD?'
+2026-02-15 12:18:38 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.73)
+2026-02-15 12:18:44 | [32mINFO[0m | app.main | query_documents:140 | Query: 'To avoid double counting, how should deaths be captured in section 12.3.1.1 and section 12.3.1.2 of a CSR?'
+2026-02-15 12:18:48 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 1.00)
+2026-02-15 12:19:05 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What specific information should be excluded from the summary table of common adverse events located in the body of the clinical study report (section 12.2.2)?'
+2026-02-15 12:19:07 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-15 12:19:13 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the technical distinction between a "protocol deviation" and an "important protocol deviation"?'
+2026-02-15 12:19:15 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.89)
+2026-02-15 12:29:30 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the "one major purpose" of a control group in a clinical trial according to the guidance?'
+2026-02-15 12:29:36 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.67)
+2026-02-15 12:30:02 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How is "bias" defined in the context of clinical trial design, and which two techniques are primarily used to minimize it?'
+2026-02-15 12:30:05 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.59)
+2026-02-15 12:30:11 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What are the five types of control groups recognized by this document, and which one is considered the "fifth type" due to its inability to ensure group comparability?'
+2026-02-15 12:30:14 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-15 12:30:24 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Define "assay sensitivity." Why is it more critical for a non-inferiority trial than for a superiority trial?'
+2026-02-15 12:30:28 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.60)
+2026-02-15 12:30:46 | [32mINFO[0m | app.main | query_documents:140 | Query: 'The document states that assay sensitivity in a non-inferiority trial is deduced from two determinations. What are they?'
+2026-02-15 12:30:49 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.77)
+2026-02-15 12:31:15 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What are the four critical steps required in the design and conduct of a non-inferiority trial to ensure its validity?'
+2026-02-15 12:31:19 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-15 12:31:30 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Identify at least four factors in the actual conduct of a trial that can undermine its assay sensitivity.'
+2026-02-15 12:31:33 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.80)
+2026-02-15 12:31:52 | [32mINFO[0m | app.main | query_documents:140 | Query: 'In what specific clinical situation is it generally considered "inappropriate" to use a placebo control group?'
+2026-02-15 12:32:10 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.76)
+2026-02-15 12:32:26 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to the "Choosing the Concurrent Control" flowchart, if a proven effective treatment exists and is known to be life-saving, what are the primary study options available to a sponsor?'
+2026-02-15 12:32:30 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.52)
+2026-02-15 12:32:38 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Based on Table 1, which control types are capable of measuring "absolute effect size," and which are generally unable to do so?'
+2026-02-15 12:32:40 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.79)
+2026-02-15 12:42:09 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What does the FDA consider to be the "start" of the ongoing informed consent process?'
+2026-02-15 12:42:15 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.60)
+2026-02-15 12:42:31 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How does the guidance define "understandable" language in the context of informed consent?'
+2026-02-15 12:42:33 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.59)
+2026-02-15 12:42:40 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Provide two specific examples of "exculpatory language" that are prohibited from appearing in consent forms.'
+2026-02-15 12:42:43 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.80)
+2026-02-15 12:43:10 | [32mINFO[0m | app.main | query_documents:140 | Query: 'According to 21 CFR 50.25(a), what are the eight basic elements of informed consent that must be provided to every subject?'
+2026-02-15 12:43:13 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)
+2026-02-15 12:43:26 | [32mINFO[0m | app.main | query_documents:140 | Query: 'For "applicable clinical trials," what specific, unmodifiable statement must be included in the informed consent document?'
+2026-02-15 12:43:30 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.68)
+2026-02-15 12:43:50 | [32mINFO[0m | app.main | query_documents:140 | Query: 'Under what two specific circumstances does the FDA allow for an exception to the requirement for obtaining informed consent?'
+2026-02-15 12:43:54 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.70)
+2026-02-15 12:44:03 | [32mINFO[0m | app.main | query_documents:140 | Query: 'What is the required process for documenting informed consent when using a "short form" written document?'
+2026-02-15 12:44:07 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.62)
+2026-02-15 12:44:21 | [32mINFO[0m | app.main | query_documents:140 | Query: 'When enrolling a child in research that presents greater than minimal risk but no prospect of direct benefit (under 21 CFR 50.53), whose permission is required?'
+2026-02-15 12:44:26 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.84)
+2026-02-15 12:44:32 | [32mINFO[0m | app.main | query_documents:140 | Query: 'If an investigator faces an unexpected enrollment of a subject who does not understand English and has no translated long form, what sequential steps should be followed?'
+2026-02-15 12:44:41 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.82)
+2026-02-15 12:44:47 | [32mINFO[0m | app.main | query_documents:140 | Query: 'How should an investigator handle data already collected from a subject who decides to withdraw from a clinical trial?'
+2026-02-15 12:44:51 | [32mINFO[0m | app.main | query_documents:154 | Answer generated (confidence: 0.78)

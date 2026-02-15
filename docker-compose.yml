@@ -1,0 +1,64 @@
+services:
+  # 1. Ollama service (The Engine)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: pfizer-rag-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # Use ollama's built-in CLI for healthcheck
+    healthcheck:
+      test: ["CMD", "/bin/ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  # 2. The Auto-Puller (The Setup Assistant)
+  ollama-pull-model:
+    image: curlimages/curl:latest
+    container_name: ollama-pull-model
+    command: >
+      -X POST http://ollama:11434/api/pull
+      -d '{"name": "qwen2.5:7b"}'
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: "no"
+
+  # 3. FastAPI RAG application
+  rag-api:
+    build: .
+    container_name: pfizer-rag-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./app:/app/app
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=qwen2.5:7b
+      - EMBEDDING_MODEL=mixedbread-ai/mxbai-embed-large-v1
+      - CHUNK_SIZE=512
+      - CHUNK_OVERLAP=50
+      - TOP_K=5
+      - SIMILARITY_THRESHOLD=0.3
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      ollama-pull-model:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  ollama_data:

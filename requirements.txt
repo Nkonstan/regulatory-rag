@@ -1,0 +1,25 @@
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+pydantic==2.8.2
+pydantic-settings==2.1.0
+
+# PDF Processing
+pymupdf==1.24.10
+pdfplumber==0.11.0
+
+# Embeddings & Vector Store
+sentence-transformers==2.5.1
+chromadb==0.4.22
+
+
+# BM25 for hybrid retrieval
+rank-bm25==0.2.2
+
+# LLM
+requests==2.31.0
+
+# Utilities
+python-dotenv==1.0.0
+tiktoken==0.8.0
+numpy==1.26.3
