@@ -14,7 +14,7 @@ class Source(BaseModel):
 class QueryRequest(BaseModel):
     """Request model for query endpoint."""
     question: str = Field(..., min_length=1, description="User's question")
-    top_k: Optional[int] = Field(5, ge=1, le=20, description="Number of sources to retrieve")
+    top_k: Optional[int] = Field(None, ge=1, le=20, description="Number of sources to retrieve")
 
 
 class QueryResponse(BaseModel):

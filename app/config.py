@@ -17,13 +17,13 @@ class Settings(BaseSettings):
     chunk_overlap: int = 50
     
     # Retrieval Configuration
-    top_k: int = 5
-    similarity_threshold: float = 0.3
+    top_k: int = 3
+    similarity_threshold: float = 0.45
     
     # Hybrid Retrieval Configuration (NEW)
     use_hybrid_search: bool = True  # Enable BM25 + semantic hybrid
-    bm25_weight: float = 0.3  # Weight for BM25 scores (0.0-1.0)
-    semantic_weight: float = 0.7  # Weight for semantic scores (0.0-1.0)
+    bm25_weight: float = 0.40  # Weight for BM25 scores (0.0-1.0)
+    semantic_weight: float = 0.60  # Weight for semantic scores (0.0-1.0)
     # Note: bm25_weight + semantic_weight should = 1.0
     
     # Application Paths

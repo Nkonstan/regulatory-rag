@@ -40,9 +40,9 @@ class LLMService:
                     "prompt": prompt,
                     "stream": False,
                     "options": {
-                        "temperature": 0.1,  # Low temperature for factual responses
-                        "top_p": 0.9,
-                        "num_predict": 512
+                        "temperature": 0,  # Low temperature for factual responses
+                        "top_p": 1,
+                        "num_predict": 1024
                     }
                 },
                 timeout=60
@@ -74,26 +74,26 @@ class LLMService:
             context_parts.append(f"{section_info}\n{chunk['chunk']}\n")
         
         return "\n".join(context_parts)
-    
+
     def _create_prompt(self, question: str, context: str) -> str:
         """Create prompt for LLM."""
-        prompt = f"""You are a pharmaceutical regulatory expert assistant. Answer the question based ONLY on the provided context from FDA/ICH regulatory documents.
+        prompt = f"""You are a pharmaceutical regulatory expert assistant. Answer based ONLY on the provided context from FDA/ICH regulatory documents.
 
-Context:
-{context}
+    Context (ranked by relevance):
+    {context}
 
-Question: {question}
+    Question: {question}
 
-Instructions:
-1. Answer directly and concisely
-2. Use only information from the context
-3. If the context doesn't contain enough information, say "Based on the provided documents, I cannot fully answer this question."
-4. Cite specific sections when relevant (e.g., "According to Section 2.1.3...")
-5. Be precise about regulatory requirements
+    Instructions:
+    1. Chunks are ordered by relevance - prioritize information from TOP chunks
+    2. Read the question carefully to understand what is specifically being asked, then verify which chunk directly answers that specific question
+    3. Answer directly using ONLY information from the context
+    4. Cite the specific section (e.g., "According to Section III.A.1...")
+    5. If context is insufficient, say "Based on the provided documents, I cannot fully answer this question"
 
-Answer:"""
-        
+    Answer:"""
         return prompt
+
     
     def _calculate_confidence(self, chunks: List[Dict]) -> float:
         """

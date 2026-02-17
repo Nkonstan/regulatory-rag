@@ -4,4 +4,6 @@ venv/
 .venv/
 data/vectordb/
 data/uploads/*
+data/logs/
+q-a-rag/*
 !data/uploads/.gitkeep

@@ -1,0 +1,95 @@
+E3 document:
+
+Section 1: Flexibility and Structure
+
+    Is the ICH E3 guidance considered a rigid, mandatory template for Clinical Study Reports (CSRs)? 
+
+    How should a sponsor handle sections or topics that are not addressed in the ICH E3 guidance or do not have a specified location? 
+
+    If a sponsor decides to reorder or rename sections presented in the ICH E3 guidance, is a formal rationale required in the report? 
+
+Section 2: Synopsis and Appendices
+
+    How does the ICH M4E guidance change the recommended length of a CSR synopsis compared to the original ICH E3 guidance? 
+
+    If a document is already available in the Trial Master File (TMF), is it still necessary to include it in the CSR appendices? 
+
+    Name three specific documents that should always be included in the trial report for reviewer assessment, regardless of their presence in the TMF. 
+
+    What are the two main options provided for submitting data on topics not mentioned in the original ICH E3, such as pharmacogenomics or biomarkers, within an eCTD? 
+
+Section 3: Terminology and Data Display
+
+    To avoid double counting, how should deaths be captured in section 12.3.1.1 and section 12.3.1.2 of a CSR? 
+
+    What specific information should be excluded from the summary table of common adverse events located in the body of the clinical study report (section 12.2.2)? 
+
+    What is the technical distinction between a "protocol deviation" and an "important protocol deviation"?
+    
+    
+    
+ E 10 Document:
+    
+    Section 1: Core Concepts and Definitions
+
+    What is the "one major purpose" of a control group in a clinical trial according to the guidance? 
+
+    How is "bias" defined in the context of clinical trial design, and which two techniques are primarily used to minimize it? 
+
+    What are the five types of control groups recognized by this document, and which one is considered the "fifth type" due to its inability to ensure group comparability? 
+
+Section 2: Assay Sensitivity and Non-inferiority
+
+    Define "assay sensitivity." Why is it more critical for a non-inferiority trial than for a superiority trial? 
+
+    The document states that assay sensitivity in a non-inferiority trial is deduced from two determinations. What are they? 
+
+    What are the four critical steps required in the design and conduct of a non-inferiority trial to ensure its validity? 
+
+    Identify at least four factors in the actual conduct of a trial that can undermine its assay sensitivity. 
+
+Section 3: Ethics and Decision Logic
+
+    In what specific clinical situation is it generally considered "inappropriate" to use a placebo control group? 
+
+    According to the "Choosing the Concurrent Control" flowchart, if a proven effective treatment exists and is known to be life-saving, what are the primary study options available to a sponsor? 
+
+    Based on Table 1, which control types are capable of measuring "absolute effect size," and which are generally unable to do so?    
+    
+    
+    
+    
+ICD Document:
+    
+    Section 1: General Requirements and Definitions
+
+    What does the FDA consider to be the "start" of the ongoing informed consent process? 
+
+    How does the guidance define "understandable" language in the context of informed consent? 
+
+    Provide two specific examples of "exculpatory language" that are prohibited from appearing in consent forms. 
+
+Section 2: Elements of Consent
+
+    According to 21 CFR 50.25(a), what are the eight basic elements of informed consent that must be provided to every subject? 
+
+    For "applicable clinical trials," what specific, unmodifiable statement must be included in the informed consent document? 
+
+    Under what two specific circumstances does the FDA allow for an exception to the requirement for obtaining informed consent? 
+
+Section 3: Special Populations and Processes
+
+    What is the required process for documenting informed consent when using a "short form" written document? 
+
+    When enrolling a child in research that presents greater than minimal risk but no prospect of direct benefit (under 21 CFR 50.53), whose permission is required? 
+
+    If an investigator faces an unexpected enrollment of a subject who does not understand English and has no translated long form, what sequential steps should be followed? 
+
+    How should an investigator handle data already collected from a subject who decides to withdraw from a clinical trial?
+    
+    
+    
+    
+    
+    
+    
