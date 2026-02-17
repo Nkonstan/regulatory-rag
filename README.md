@@ -49,7 +49,7 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
 
 3. **Start the system**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
    First startup downloads:
@@ -122,13 +122,13 @@ CHUNK_SIZE=512
 CHUNK_OVERLAP=50
 
 # Retrieval
-TOP_K=5
-SIMILARITY_THRESHOLD=0.3
+TOP_K=3
+SIMILARITY_THRESHOLD=0.45
 
 # Hybrid Search (BM25 + Semantic)
 USE_HYBRID_SEARCH=true
-BM25_WEIGHT=0.3
-SEMANTIC_WEIGHT=0.7
+BM25_WEIGHT=0.4
+SEMANTIC_WEIGHT=0.6
 ```
 
 ## Architecture
@@ -160,7 +160,7 @@ SEMANTIC_WEIGHT=0.7
 │  │ • PDF Parsing   │      │  Hybrid Search:  │      │ • Context Build  │  │
 │  │ • Section       │──────►                  │──────► • LLM Prompting  │  │
 │  │   Detection     │      │  ┌────────────┐  │      │ • Answer Gen.    │  │
-│  │ • Chunking      │      │  │ BM25 (30%) │  │      │ • Confidence     │  │
+│  │ • Chunking      │      │  │ BM25 (40%) │  │      │ • Confidence     │  │
 │  │   (512 tokens)  │      │  └─────┬──────┘  │      │   Scoring        │  │
 │  │ • Embedding     │      │        │         │      │                  │  │
 │  │   (1024-dim)    │      │  ┌─────▼──────┐  │      │                  │  │
@@ -168,7 +168,7 @@ SEMANTIC_WEIGHT=0.7
 │  │ → ChromaDB      │      │  └─────┬──────┘  │      │                  │  │
 │  │ → BM25 Index    │      │        │         │      │                  │  │
 │  │                 │      │  ┌─────▼──────┐  │      │                  │  │
-│  └─────────────────┘      │  │Semantic(70%)│ │      └──────────────────┘  │
+│  └─────────────────┘      │  │Semantic(60%)│ │      └──────────────────┘  │
 │                           │  └────────────┘  │                             │
 │                           │                  │                             │
 │                           │  → Ranked Chunks │                             │
@@ -224,11 +224,11 @@ The system runs 3 containers:
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # Specific service
-docker-compose logs -f rag-api
-docker-compose logs -f ollama
+docker compose logs -f rag-api
+docker compose logs -f ollama
 ```
 
 ## Troubleshooting
@@ -244,15 +244,15 @@ docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
 
 **Model not found:**
 ```bash
-docker-compose exec ollama ollama pull qwen2.5:7b
+docker compose exec ollama ollama pull qwen2.5:7b
 ```
 
 **Reset database:**
 ```bash
-docker-compose down
+docker compose down
 rm -rf data/vectordb/*
 rm data/uploads/.processed_files.json
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Performance
