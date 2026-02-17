@@ -1,0 +1,178 @@
+# RAG SYSTEM EVALUATION
+
+You are evaluating a Retrieval-Augmented Generation (RAG) system for pharmaceutical regulatory documents.
+
+## EVALUATION INSTRUCTIONS
+
+- Evaluate each question-answer pair **independently** on its own merits
+- Do NOT attempt to maintain consistency across questions
+- Judge outputs based on quality, not expectations
+- Be objective and evidence-based
+
+## DOCUMENT BEING EVALUATED
+[Document Name: "ICD - Document 1.pdf"]
+
+---
+
+## EVALUATION FRAMEWORK
+
+For each question-answer pair, assess **SIX dimensions**:
+
+### 1️⃣ ANSWER CORRECTNESS (0-10 points)
+**What to assess:**
+- Factual accuracy against the source document
+- Correct interpretation of regulatory requirements
+- No misstatements or incorrect claims
+
+**Scoring:**
+- 10: Completely accurate
+- 7-9: Mostly accurate, minor imprecisions
+- 4-6: Partially correct, contains errors
+- 1-3: Mostly incorrect
+- 0: Completely wrong
+
+### 2️⃣ GROUNDEDNESS / FAITHFULNESS (0-10 points) ⚠️ MOST CRITICAL
+**What to assess:**
+- Is EVERY claim supported by the retrieved chunks?
+- Does the answer introduce information NOT in the context?
+- Are there hallucinations (fabricated facts, sections, citations)?
+
+**Scoring:**
+- 10: 100% grounded, every claim traceable
+- 7-9: Mostly grounded, minor unsupported details
+- 4-6: Significant unsupported claims
+- 1-3: Mostly hallucinated
+- 0: Completely fabricated
+
+**CRITICAL:** Flag ANY hallucination. This is the primary RAG failure mode.
+
+### 3️⃣ RETRIEVAL QUALITY (0-10 points)
+**What to assess:**
+- Do retrieved chunks contain information needed to answer?
+- Are the TOP chunks actually the most relevant?
+- Would different sections have been better?
+
+**Scoring:**
+- 10: Perfect retrieval, top chunk directly answers question
+- 7-9: Good retrieval, answer in top-3 chunks
+- 4-6: Partial retrieval, some relevant info missing
+- 1-3: Poor retrieval, barely relevant
+- 0: Complete retrieval failure
+
+### 4️⃣ SOURCE ATTRIBUTION (0-10 points)
+**What to assess:**
+- Are sources cited with section numbers/titles?
+- Is attribution accurate (document, section, page)?
+- Can claims be traced to specific chunks?
+
+**Scoring:**
+- 10: Precise citations, fully traceable
+- 7-9: Good citations, minor gaps
+- 4-6: Vague or partially incorrect
+- 1-3: Poor or missing citations
+- 0: No attribution
+
+### 5️⃣ COMPLETENESS (0-10 points)
+**What to assess:**
+- Does the answer address ALL parts of the question?
+- Is critical information missing that exists in chunks?
+- Is detail level appropriate (not too brief/verbose)?
+
+**Scoring:**
+- 10: Complete, addresses all aspects
+- 7-9: Mostly complete, minor gaps
+- 4-6: Incomplete, missing significant aspects
+- 1-3: Barely addresses question
+- 0: Does not answer question
+
+### 6️⃣ CONTEXT SUFFICIENCY (YES / NO / PARTIAL)
+**What to assess:**
+- If you had ONLY the retrieved chunks (no full PDF), could you verify the answer?
+
+**Scoring:**
+- YES: Chunks contain sufficient information
+- PARTIAL: Chunks contain some but not all needed info
+- NO: Chunks insufficient, need full document
+
+---
+
+## OUTPUT FORMAT
+
+For each question, provide:
+```
+═══════════════════════════════════════════════
+QUESTION [N]: [First 10 words...]
+═══════════════════════════════════════════════
+
+📊 SCORES:
+├─ Correctness:        X/10
+├─ Groundedness:       X/10  [⚠️ HALLUCINATION if <7]
+├─ Retrieval Quality:  X/10
+├─ Attribution:        X/10
+├─ Completeness:       X/10
+└─ Context Sufficiency: YES / NO / PARTIAL
+
+📝 ANALYSIS (2-4 sentences):
+[Explain scores with specific evidence]
+
+🚨 CRITICAL FAILURES:
+[ ] Hallucination: [specify]
+[ ] Wrong retrieval: [specify]
+[ ] Attribution error: [specify]
+[ ] Factual error: [specify]
+[ ] Incomplete: [specify]
+[ ] None
+
+✅ VERDICT: PASS / MARGINAL / FAIL
+```
+
+---
+
+## AGGREGATE RESULTS (After all 10 questions)
+```
+═══════════════════════════════════════════════
+📊 OVERALL PERFORMANCE
+═══════════════════════════════════════════════
+
+AVERAGE SCORES:
+├─ Correctness:        X.X/10
+├─ Groundedness:       X.X/10  ⚠️ CRITICAL
+├─ Retrieval Quality:  X.X/10
+├─ Attribution:        X.X/10
+└─ Completeness:       X.X/10
+
+PASS RATE:
+├─ PASS:     X/10 (XX%)
+├─ MARGINAL: X/10 (XX%)
+└─ FAIL:     X/10 (XX%)
+
+FAILURE BREAKDOWN:
+├─ Hallucinations:    X/10 (XX%)  ⚠️
+├─ Retrieval failures: X/10 (XX%)
+├─ Attribution errors: X/10 (XX%)
+├─ Factual errors:     X/10 (XX%)
+└─ Incomplete answers: X/10 (XX%)
+
+CONTEXT SUFFICIENCY:
+├─ YES:     X/10 (XX%)
+├─ PARTIAL: X/10 (XX%)
+└─ NO:      X/10 (XX%)
+
+CRITICAL ISSUES:
+[List systematic failures]
+
+STRENGTHS:
+[What system does well]
+
+WEAKNESSES:
+[What needs improvement]
+
+PRODUCTION READINESS:
+[ ] ❌ NOT READY (>20% hallucination OR >30% retrieval failure)
+[ ] ⚠️ NEEDS WORK (10-20% hallucination OR 15-30% retrieval issues)
+[ ] ✅ READY (<10% critical failures, appropriate for use case)
+```
+
+---
+
+## EVALUATION DATA
