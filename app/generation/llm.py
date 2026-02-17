@@ -1,4 +1,4 @@
-import requests
+import httpx
 from typing import List, Dict
 from app.config import settings
 
@@ -9,8 +9,11 @@ class LLMService:
     def __init__(self):
         self.base_url = settings.ollama_base_url
         self.model = settings.ollama_model
-    
-    def generate_answer(
+        self.client = httpx.AsyncClient(
+            timeout=60.0,
+            limits=httpx.Limits(max_keepalive_connections=5, max_connections=10)
+        )
+    async def generate_answer(
         self, 
         question: str, 
         context_chunks: List[Dict]
@@ -33,7 +36,7 @@ class LLMService:
         
         # Call Ollama
         try:
-            response = requests.post(
+            response = await self.client.post(
                 f"{self.base_url}/api/generate",
                 json={
                     "model": self.model,
@@ -60,7 +63,7 @@ class LLMService:
                 'confidence': confidence
             }
             
-        except requests.exceptions.RequestException as e:
+        except httpx.HTTPError as e:
             print(f"✗ Ollama request failed: {e}")
             # Fallback to extractive answer
             return self._extractive_answer(question, context_chunks)
@@ -142,14 +145,17 @@ class LLMService:
             'confidence': best_chunk['relevance'] * 0.5  # Lower confidence for extractive
         }
     
-    def check_health(self) -> bool:
+    async def check_health(self) -> bool:
         """Check if Ollama is available."""
         try:
-            response = requests.get(f"{self.base_url}/api/tags", timeout=5)
+            response =  await self.client.get(f"{self.base_url}/api/tags")
             return response.status_code == 200
         except:
             return False
-
+            
+    async def close(self):
+        """Close the HTTP client."""
+        await self.client.aclose()
 
 # Global instance
 llm_service = LLMService()

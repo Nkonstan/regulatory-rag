@@ -150,7 +150,7 @@ async def query_documents(request: QueryRequest):
         )
     
     # Generate answer
-    result = llm_service.generate_answer(request.question, chunks)
+    result = await llm_service.generate_answer(request.question, chunks)
     logger.info(f"Answer generated (confidence: {result['confidence']:.2f})")
     
     # Format sources
@@ -159,7 +159,7 @@ async def query_documents(request: QueryRequest):
             document=chunk['document'],
             chunk=chunk['chunk'][:300] + "..." if len(chunk['chunk']) > 300 else chunk['chunk'],
             section=f"{chunk['section']} - {chunk['section_title']}",
-            sections_all=chunk.get('metadata', {}).get('sections_all'),  # ← Add this
+            sections_all=chunk.get('metadata', {}).get('sections_all'),  
             relevance=chunk['relevance']
         )
         for chunk in chunks
@@ -175,7 +175,7 @@ async def query_documents(request: QueryRequest):
 @app.get("/api/health", response_model=HealthResponse)
 async def health_check():
     """Health check."""
-    ollama_ok = llm_service.check_health()
+    ollama_ok = await llm_service.check_health()
     embedding_ok = document_service.chunker is not None
     vector_ok = vector_store.collection is not None
     

@@ -4,7 +4,7 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
 
 ## Features
 
-- **Hybrid Retrieval**: BM25 keyword search (30%) + semantic embeddings (70%)
+- **Hybrid Retrieval**: BM25 keyword search (40%) + semantic embeddings (60%)
 - **Section-Aware Parsing**: Detects hierarchical document sections (Roman numerals, letters, decimal notation)
 - **GPU Acceleration**: Fast embeddings and LLM inference
 - **Auto-Processing**: PDFs in `data/uploads/` are indexed automatically on startup
