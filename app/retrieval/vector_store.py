@@ -5,10 +5,12 @@ import pickle
 from pathlib import Path
 from rank_bm25 import BM25Okapi
 import numpy as np
+import logging
 
 from app.config import settings
 from app.retrieval.embeddings import embedding_service
 
+logger = logging.getLogger(__name__)
 
 class VectorStore:
     """Vector store using ChromaDB + BM25 for hybrid retrieval."""
@@ -32,7 +34,7 @@ class VectorStore:
                     allow_reset=True
                 )
             )
-            
+            logger.info("✅ ChromaDB client created")
             # Get or create collection with COSINE similarity
             self.collection = self.client.get_or_create_collection(
                 name="regulatory_documents",
@@ -41,15 +43,15 @@ class VectorStore:
                     "hnsw:space": "cosine"  # Use cosine similarity!
                 }
             )
-            
+            logger.info("✅ Collection initialized")
             # Load BM25 index if exists
             self._load_bm25_index()
-            
-            print(f"✓ Vector store initialized ({self.collection.count()} documents)")
+            doc_count = self.collection.count()
+            logger.info(f"✅ Vector store ready ({doc_count} chunks in database)")
             if self.bm25_index:
-                print(f"✓ BM25 index loaded ({len(self.bm25_corpus)} documents)")
+                logger.info(f"✅ BM25 hybrid search enabled ({len(self.bm25_corpus)} documents)")
         except Exception as e:
-            print(f"✗ Failed to initialize vector store: {e}")
+            logger.error(f"✗ Failed to initialize vector store: {e}")
             raise
     
     def _tokenize(self, text: str) -> List[str]:
@@ -75,19 +77,20 @@ class VectorStore:
     def _load_bm25_index(self):
         """Load BM25 index from disk."""
         if not settings.bm25_index_path.exists():
-            print("ℹ️ No existing BM25 index found")
+            logger.info("ℹ️  No existing BM25 index found (will use semantic search only)")
             return
         
         try:
+            logger.info("⏳ Loading BM25 index...")
             with open(settings.bm25_index_path, 'rb') as f:
                 bm25_data = pickle.load(f)
             
             self.bm25_corpus = bm25_data['corpus']
             self.bm25_metadata = bm25_data['metadata']
             self.bm25_index = bm25_data['index']
-            
+            logger.info(f"✅ BM25 index loaded ({len(self.bm25_corpus)} documents)")
         except Exception as e:
-            print(f"⚠️ Failed to load BM25 index: {e}")
+            logger.warning(f"⚠️  Failed to load BM25 index: {e}")
             self.bm25_corpus = []
             self.bm25_metadata = []
             self.bm25_index = None

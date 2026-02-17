@@ -25,13 +25,13 @@ services:
       start_period: 60s
     restart: unless-stopped
 
-  # 2. The Auto-Puller (The Setup Assistant)
+  # 2. The Auto-Puller 
   ollama-pull-model:
     image: curlimages/curl:latest
     container_name: ollama-pull-model
     command: >
       -X POST http://ollama:11434/api/pull
-      -d '{"name": "qwen2.5:7b"}'
+      -d '{"name": "${OLLAMA_MODEL}"}'
     depends_on:
       ollama:
         condition: service_healthy
@@ -46,14 +46,10 @@ services:
     volumes:
       - ./data:/app/data
       - ./app:/app/app
+    env_file:
+      - .env
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
-      - OLLAMA_MODEL=qwen2.5:7b
-      - EMBEDDING_MODEL=mixedbread-ai/mxbai-embed-large-v1
-      - CHUNK_SIZE=512
-      - CHUNK_OVERLAP=50
-      - TOP_K=3
-      - SIMILARITY_THRESHOLD=0.45
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       ollama-pull-model:

@@ -41,15 +41,14 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
    cp your-pdfs/*.pdf data/uploads/
    ```
 
-2. **Configure environment** (optional)
+2. **Configure environment**
    ```bash
    cp .env.example .env
-   # Edit .env if needed - defaults work fine
    ```
 
-3. **Start the system**
+3. **Build and Start the system**
    ```bash
-   docker compose up -d
+   docker compose up -d --build
    ```
 
    First startup downloads:
@@ -65,9 +64,9 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
 ## API Usage
 
 ### Upload PDF (manual)
-```bash
-curl -X POST "http://localhost:8000/api/ingest" \
-  -F "file=@document.pdf"
+```curl -X POST http://localhost:8000/api/ingest \
+  -F "file=@document.pdf" \
+  -v
 ```
 
 Response:
@@ -84,9 +83,7 @@ Response:
 ```bash
 curl -X POST "http://localhost:8000/api/query" \
   -H "Content-Type: application/json" \
-  -d '{
-    "question": "What is a placebo-controlled trial?",
-    "top_k": 5
+  -d '{"question": "What is a placebo-controlled trial?"
   }'
 ```
 
@@ -106,6 +103,7 @@ Response:
   "confidence": 0.85
 }
 ```
+
 
 ## Environment Variables
 
@@ -138,14 +136,14 @@ SEMANTIC_WEIGHT=0.6
 │                            DOCKER SERVICES                                  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  ┌──────────────────────┐              ┌───────────────────────────────┐   │
-│  │   Ollama Service     │              │      RAG API Service          │   │
-│  │   (GPU-Accelerated)  │◄─────────────┤      (FastAPI)                │   │
-│  │                      │              │                               │   │
-│  │  • Qwen 2.5 7B LLM   │              │  POST /api/ingest             │   │
-│  │  • Port 11434        │              │  POST /api/query              │   │
-│  └──────────────────────┘              │  GET  /api/health             │   │
-│                                        └───────────────────────────────┘   │
+│  ┌──────────────────────┐              ┌───────────────────────────────┐    │
+│  │   Ollama Service     │              │      RAG API Service          │    │
+│  │   (GPU-Accelerated)  │◄─────────────┤      (FastAPI)                │    │
+│  │                      │              │                               │    │
+│  │  • Qwen 2.5 7B LLM   │              │  POST /api/ingest             │    │
+│  │  • Port 11434        │              │  POST /api/query              │    │
+│  └──────────────────────┘              │  GET  /api/health             │    │
+│                                        └───────────────────────────────┘    │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -153,26 +151,26 @@ SEMANTIC_WEIGHT=0.6
 │                          CORE FUNCTIONALITIES                               │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  ┌─────────────────┐      ┌──────────────────┐      ┌──────────────────┐  │
-│  │   INGESTION     │      │    RETRIEVAL     │      │   GENERATION     │  │
-│  ├─────────────────┤      ├──────────────────┤      ├──────────────────┤  │
-│  │                 │      │                  │      │                  │  │
-│  │ • PDF Parsing   │      │  Hybrid Search:  │      │ • Context Build  │  │
-│  │ • Section       │──────►                  │──────► • LLM Prompting  │  │
-│  │   Detection     │      │  ┌────────────┐  │      │ • Answer Gen.    │  │
-│  │ • Chunking      │      │  │ BM25 (40%) │  │      │ • Confidence     │  │
-│  │   (512 tokens)  │      │  └─────┬──────┘  │      │   Scoring        │  │
-│  │ • Embedding     │      │        │         │      │                  │  │
-│  │   (1024-dim)    │      │  ┌─────▼──────┐  │      │                  │  │
-│  │                 │      │  │  Fusion    │  │      │                  │  │
-│  │ → ChromaDB      │      │  └─────┬──────┘  │      │                  │  │
-│  │ → BM25 Index    │      │        │         │      │                  │  │
-│  │                 │      │  ┌─────▼──────┐  │      │                  │  │
-│  └─────────────────┘      │  │Semantic(60%)│ │      └──────────────────┘  │
-│                           │  └────────────┘  │                             │
-│                           │                  │                             │
-│                           │  → Ranked Chunks │                             │
-│                           └──────────────────┘                             │
+│  ┌─────────────────┐      ┌──────────────────┐      ┌──────────────────┐    │
+│  │   INGESTION     │      │    RETRIEVAL     │      │   GENERATION     │    │
+│  ├─────────────────┤      ├──────────────────┤      ├──────────────────┤    │
+│  │                 │      │                  │      │                  │    │
+│  │ • PDF Parsing   │      │  Hybrid Search:  │      │ • Context Build  │    │
+│  │ • Section       │──────►                  │──────► • LLM Prompting  │    │
+│  │   Detection     │      │  ┌────────────┐  │      │ • Answer Gen.    │    │
+│  │ • Chunking      │      │  │ BM25 (40%) │  │      │ • Confidence     │    │
+│  │   (512 tokens)  │      │  └─────┬──────┘  │      │   Scoring        │    │
+│  │ • Embedding     │      │        │         │      │                  │    │
+│  │   (1024-dim)    │      │  ┌─────▼──────┐  │      │                  │    │
+│  │                 │      │  │  Fusion    │  │      │                  │    │ 
+│  │ → ChromaDB      │      │  └─────┬──────┘  │      │                  │    │
+│  │ → BM25 Index    │      │        │         │      │                  │    │
+│  │                 │      │  ┌─────▼──────┐  │      │                  │    │
+│  └─────────────────┘      │  │Semantic(60%)│ │      └──────────────────┘    │
+│                           │  └────────────┘  │                              │
+│                           │                  │                              │
+│                           │  → Ranked Chunks │                              │
+│                           └──────────────────┘                              │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```

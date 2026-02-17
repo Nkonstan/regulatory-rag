@@ -2,6 +2,7 @@
 __pycache__/
 venv/
 .venv/
+data/*
 data/vectordb/
 data/uploads/*
 data/logs/

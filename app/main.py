@@ -7,13 +7,10 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import shutil
-
+import re
 from app.models import QueryRequest, QueryResponse, IngestResponse, HealthResponse, Source
 from app.config import settings
 from app.logging_config import setup_logging, get_logger
-from app.services import document_service
-from app.retrieval.vector_store import vector_store
-from app.generation.llm import llm_service
 
 # Configure logging
 setup_logging(
@@ -21,6 +18,12 @@ setup_logging(
     log_file=settings.upload_dir.parent / "logs" / "rag_system.log"
 )
 logger = get_logger(__name__)
+
+from app.services import document_service
+from app.retrieval.vector_store import vector_store
+from app.generation.llm import llm_service
+
+
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -81,15 +84,53 @@ async def ingest_document(file: UploadFile = File(...)):
     """Ingest a PDF document."""
     logger.info(f"Ingest request: {file.filename}")
     
-    # Validate PDF
+    # Validate PDF extension
     if not file.filename.endswith('.pdf'):
+        logger.warning(f"Rejected non-PDF file: {file.filename}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Only PDF files are supported"
         )
     
+    # Check file size (50MB limit)
+    file.file.seek(0, 2)
+    file_size = file.file.tell()
+    file.file.seek(0)
+    
+    MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB
+    if file_size > MAX_FILE_SIZE:
+        logger.warning(f"File too large: {file.filename} ({file_size / 1024 / 1024:.2f}MB > 50MB)")
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"File too large. Maximum size is 50MB"
+        )
+    
+    # Sanitize filename (remove dangerous characters)
+    safe_filename = re.sub(r'[^a-zA-Z0-9_.-]', '_', file.filename)
+    if not safe_filename.endswith('.pdf'):
+        safe_filename += '.pdf'
+    
+    # Check if file already exists
+    file_path = settings.upload_dir / safe_filename
+    if file_path.exists():
+        logger.warning(f"Duplicate upload attempt: {safe_filename} already exists")
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Document {safe_filename} already exists"
+        )
+    
+    # Verify PDF magic bytes (first 4 bytes should be %PDF)
+    first_bytes = await file.read(4)
+    file.file.seek(0)
+    
+    if first_bytes != b'%PDF':
+        logger.warning(f"Invalid PDF signature: {file.filename} (first bytes: {first_bytes})")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid PDF file (file signature check failed)"
+        )
+    
     # Save file
-    file_path = settings.upload_dir / file.filename
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
@@ -97,19 +138,21 @@ async def ingest_document(file: UploadFile = File(...)):
     result = document_service.process_pdf(file_path)
     
     if result['status'] == 'failed':
+        logger.error(f"Processing failed for {safe_filename}: {result.get('error')}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Processing failed: {result.get('error')}"
         )
     
-    logger.info(f"Ingested {file.filename}: {result['chunks']} chunks")
+    logger.info(f"Ingested {safe_filename}: {result['chunks']} chunks")
     
     return IngestResponse(
         message="Document ingested successfully",
-        document_name=file.filename,
+        document_name=safe_filename,
         chunks_created=result['chunks'],
         sections_processed=result['sections']
     )
+
 
 
 @app.post(
@@ -137,21 +180,39 @@ async def ingest_document(file: UploadFile = File(...)):
 )
 async def query_documents(request: QueryRequest):
     """Query the document database."""
-    logger.info(f"Query: '{request.question}'")
+    logger.info(f"Query: '{request.question}' (top_k={request.top_k})")
     
     # Retrieve chunks
-    chunks = vector_store.query(request.question, top_k=request.top_k)
+    try:
+        chunks = vector_store.query(request.question, top_k=request.top_k)
+    except Exception as e:
+        logger.error(f"Vector store query failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Search service temporarily unavailable"
+        )
     
     if not chunks:
+        logger.warning(f"No relevant chunks found for: '{request.question}'")
         return QueryResponse(
             answer="I couldn't find relevant information to answer this question.",
             sources=[],
             confidence=0.0
         )
     
+    logger.info(f"Retrieved {len(chunks)} chunks (avg relevance: {sum(c['relevance'] for c in chunks) / len(chunks):.2f})")
+    
     # Generate answer
-    result = await llm_service.generate_answer(request.question, chunks)
-    logger.info(f"Answer generated (confidence: {result['confidence']:.2f})")
+    try:
+        result = await llm_service.generate_answer(request.question, chunks)
+        logger.info(f"Answer generated (confidence: {result['confidence']:.2f}, length: {len(result['answer'])} chars)")
+    except Exception as e:
+        logger.error(f"LLM generation failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Answer generation service temporarily unavailable"
+        )
+
     
     # Format sources
     sources = [

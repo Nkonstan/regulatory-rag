@@ -1,7 +1,10 @@
 import httpx
+import logging
+import time
 from typing import List, Dict
 from app.config import settings
 
+logger = logging.getLogger(__name__)
 
 class LLMService:
     """Interface to Ollama for generation."""
@@ -10,9 +13,11 @@ class LLMService:
         self.base_url = settings.ollama_base_url
         self.model = settings.ollama_model
         self.client = httpx.AsyncClient(
-            timeout=60.0,
+            timeout=httpx.Timeout(120.0, connect=10.0),
             limits=httpx.Limits(max_keepalive_connections=5, max_connections=10)
         )
+        logger.info(f"✅ LLM service initialized (model: {self.model}, url: {self.base_url})")
+
     async def generate_answer(
         self, 
         question: str, 
@@ -35,7 +40,10 @@ class LLMService:
         prompt = self._create_prompt(question, context)
         
         # Call Ollama
+        start_time = time.time()
         try:
+            logger.debug(f"Sending request to Ollama (model: {self.model})")
+
             response = await self.client.post(
                 f"{self.base_url}/api/generate",
                 json={
@@ -47,13 +55,19 @@ class LLMService:
                         "top_p": 1,
                         "num_predict": 1024
                     }
-                },
-                timeout=60
+                }
             )
             response.raise_for_status()
-            
+
+            elapsed = time.time() - start_time
+            logger.info(f"✅ LLM response received ({elapsed:.2f}s)")
+
             result = response.json()
             answer = result.get('response', '').strip()
+
+            if not answer:
+                logger.warning("LLM returned empty response, falling back to extractive")
+                return self._extractive_answer(question, context_chunks)
             
             # Calculate confidence based on context relevance
             confidence = self._calculate_confidence(context_chunks)
@@ -63,10 +77,32 @@ class LLMService:
                 'confidence': confidence
             }
             
-        except httpx.HTTPError as e:
-            print(f"✗ Ollama request failed: {e}")
-            # Fallback to extractive answer
+        except httpx.TimeoutException as e:
+            elapsed = time.time() - start_time
+            logger.error(f"✗ Ollama request timed out after {elapsed:.1f}s: {str(e)}")
+            logger.info("Falling back to extractive answer")
             return self._extractive_answer(question, context_chunks)
+        
+        except httpx.ConnectError as e:
+            logger.error(f"✗ Cannot connect to Ollama at {self.base_url}: {str(e)}")
+            logger.info("Falling back to extractive answer")
+            return self._extractive_answer(question, context_chunks)
+        
+        except httpx.HTTPStatusError as e:
+            logger.error(f"✗ Ollama returned error {e.response.status_code}: {str(e)}")
+            logger.info("Falling back to extractive answer")
+            return self._extractive_answer(question, context_chunks)
+        
+        except httpx.HTTPError as e:
+            logger.error(f"✗ Ollama request failed: {type(e).__name__} - {str(e)}")
+            logger.info("Falling back to extractive answer")
+            return self._extractive_answer(question, context_chunks)
+        
+        except Exception as e:
+            logger.error(f"✗ Unexpected error during LLM generation: {type(e).__name__} - {str(e)}", exc_info=True)
+            logger.info("Falling back to extractive answer")
+            return self._extractive_answer(question, context_chunks)
+
     
     def _build_context(self, chunks: List[Dict]) -> str:
         """Build context string from retrieved chunks."""
@@ -138,7 +174,12 @@ class LLMService:
         # Use the most relevant chunk
         best_chunk = chunks[0]
         
-        answer = f"Based on {best_chunk['section_title']} (Section {best_chunk['section']}): {best_chunk['chunk'][:300]}..."
+        answer = (
+            f"⚠️ The AI service is temporarily unavailable. "
+            f"Here's the most relevant excerpt from the documents:\n\n"
+            f"**{best_chunk['section_title']} (Section {best_chunk['section']})**\n\n"
+            f"{best_chunk['chunk'][:500]}..."
+        )
         
         return {
             'answer': answer,
@@ -148,14 +189,22 @@ class LLMService:
     async def check_health(self) -> bool:
         """Check if Ollama is available."""
         try:
-            response =  await self.client.get(f"{self.base_url}/api/tags")
+            response = await self.client.get(f"{self.base_url}/api/tags", timeout=5.0)
             return response.status_code == 200
-        except:
+        except httpx.TimeoutException:
+            logger.warning("Ollama health check timed out")
             return False
-            
+        except httpx.ConnectError:
+            logger.warning(f"Cannot connect to Ollama at {self.base_url}")
+            return False
+        except Exception as e:
+            logger.warning(f"Ollama health check failed: {type(e).__name__}")
+            return False
+
     async def close(self):
         """Close the HTTP client."""
         await self.client.aclose()
+        logger.info("LLM service closed")
 
 # Global instance
 llm_service = LLMService()

@@ -23,10 +23,15 @@ class DocumentService:
     
     def __init__(self):
         """Initialize document service."""
+        logger.info("⏳ Initializing document service...")
         self.pdf_parser = PDFParser()
+        logger.info("✅ PDF parser ready")
+        
         self.chunker = SectionChunker()
+        logger.info("✅ Text chunker ready")
+
         self.tracking_file = settings.upload_dir / ".processed_files.json"
-        logger.info("DocumentService initialized")
+        logger.info("✅ Document service ready")
     
     def load_processed_files(self) -> Set[str]:
         """
