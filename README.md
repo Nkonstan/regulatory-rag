@@ -33,7 +33,7 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
 
 1. **Clone and prepare data**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Nkonstan/NikosKonstantinou-pfizer-ai-engineer-assignment.git
    cd NikosKonstantinou-pfizer-ai-engineer-assignment
    
    # Place your PDFs for auto-indexing
