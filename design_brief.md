@@ -38,6 +38,7 @@ Bounded agency: Fixed 5-node pipeline where every step is predefined, logged, an
 
 ### **System Diagram**
 
+```
 ┌─────────────────────────────────────────────────────┐
 │                    USER QUERY                       │
 │        "Find AE compliance gaps..."                 │
@@ -91,7 +92,7 @@ Bounded agency: Fixed 5-node pipeline where every step is predefined, logged, an
  AUDIT LOG (cross-cutting): Every node logs inputs,
  outputs, model version, tokens, timestamp, user ID
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+```
 **Implementation:** LangGraph state machine (deterministic flow, retry logic, auditability)
 
 ***
