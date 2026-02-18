@@ -20,6 +20,17 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
 - **PDF Processing**: PyMuPDF + pdfplumber
 - **Tokenization**: tiktoken (512-token chunks, 50-token overlap)
 
+## Evaluation
+
+The system has been evaluated on pharmaceutical document Q&A tasks. Test cases, metrics, and results are documented in:
+
+📊 **[evaluation/README.md](evaluation/README.md)** - Detailed evaluation methodology and results
+
+Key metrics:
+- Answer relevance and accuracy
+- Source attribution quality
+- Retrieval performance 
+
 ## Prerequisites
 
 - Docker & Docker Compose
@@ -60,6 +71,17 @@ A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical re
    ```bash
    curl http://localhost:8000/api/health
    ```
+
+## Logs
+
+```bash
+# All services
+docker compose logs -f
+
+# Specific service
+docker compose logs -f rag-api
+docker compose logs -f ollama
+```
 
 ## API Usage
 
@@ -103,7 +125,6 @@ Response:
   "confidence": 0.85
 }
 ```
-
 
 ## Environment Variables
 
@@ -217,17 +238,6 @@ The system runs 3 containers:
 1. **ollama** - LLM engine (port 11434, uses GPU)
 2. **ollama-pull-model** - Auto-downloads Qwen 2.5 7B on first run
 3. **rag-api** - FastAPI application (port 8000)
-
-## Logs
-
-```bash
-# All services
-docker compose logs -f
-
-# Specific service
-docker compose logs -f rag-api
-docker compose logs -f ollama
-```
 
 ## Troubleshooting
 

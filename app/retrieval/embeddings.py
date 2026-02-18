@@ -50,7 +50,7 @@ class EmbeddingService:
         """
         if not self.model:
             raise RuntimeError("Embedding model not loaded")
-        
+        logger.info(f"⏳ Generating embeddings for {len(texts)} text(s)...")
         # Generate embeddings
         embeddings = self.model.encode(
             texts,
@@ -72,7 +72,7 @@ class EmbeddingService:
         """
         if not self.model:
             raise RuntimeError("Embedding model not loaded")
-        
+        logger.debug(f"🔍 Generating query embedding: {query[:50]}...")
         embedding = self.model.encode(query, convert_to_numpy=True)
         return embedding.tolist()
     
