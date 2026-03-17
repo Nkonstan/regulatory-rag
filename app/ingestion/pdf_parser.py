@@ -1,4 +1,5 @@
 import fitz  # PyMuPDF
+import pdfplumber
 import re
 from typing import List, Dict, Tuple
 from pathlib import Path
@@ -9,11 +10,16 @@ class PDFParser:
     
     # Patterns for detecting section headings
     SECTION_PATTERNS = [
+
+        # NEW — Q&A boundaries (colon or period delimiter only, not space)
+        r'^(Q\d+)[\.:]\s*(.*)$',
+        r'^(A\d+)[\.:]\s*(.*)$',
+
         # Roman numerals: I. INTRODUCTION (1.0)
         r'^([IVX]+)\.\s+([A-Z][A-Z\s\-:]+?)(?:\s*\([0-9.]+\))?\s*$',
         
         # Letters (uppercase): A. GENERAL SCHEME (1.1) or B. PURPOSE OF CONTROL GROUP
-        r'^([A-Z])\.\s+([A-Z][A-Z\s\-:]+?)(?:\s*\([0-9.]+\))?\s*$',
+        r'^([A-Z])\.\s+([A-Za-z][A-Za-z\s\-:]+?)(?:\s*\([0-9.]+\))?\s*$',
         
         # Numbered sections with title in caps: 1. DESCRIPTION (2.3.1)
         r'^(\d+)\.\s+([A-Z][A-Za-z\s\-:]+?)(?:\s*\([0-9.]+\))?\s*$',
@@ -34,6 +40,20 @@ class PDFParser:
     def __init__(self):
         self.current_section = "0"
         self.section_hierarchy = []
+
+    def _overlaps_any(self, bx0: float, by0: float, bx1: float, by1: float,
+                    bboxes: list) -> bool:
+        """
+        Return True if the block (bx0,by0,bx1,by1) overlaps with any
+        pdfplumber table bbox. pdfplumber uses top-of-page origin, same
+        as fitz, so coordinates are directly comparable.
+        """
+        for (tx0, ty0, tx1, ty1) in bboxes:
+            # Standard rectangle overlap check
+            if bx0 < tx1 and bx1 > tx0 and by0 < ty1 and by1 > ty0:
+                return True
+        return False
+
     
     def extract_text_with_sections(self, pdf_path: Path) -> List[Dict[str, str]]:
         """
@@ -45,24 +65,92 @@ class PDFParser:
             'section': '0',
             'section_title': 'Document Start',
             'text': '',
-            'page_start': 1
+            'page_start': 1,
+            'chunk_type': 'text'
         }
-        
-        # NEW: Track section hierarchy
-        section_hierarchy = []  # e.g., ["III", "A"]
-        
+
+        section_hierarchy = []
+
+        # Pre-extract all tables using pdfplumber before the main fitz loop.
+        # page_tables maps page_num (1-indexed) -> list of Markdown table strings.
+        page_tables = {}      # pg_num -> list of markdown strings
+        page_table_bboxes = {}  # pg_num -> list of (x0, top, x1, bottom)
+
+        with pdfplumber.open(pdf_path) as pdf_pl:
+            for pg_num, pg in enumerate(pdf_pl.pages, start=1):
+                # Try bordered tables first, fall back to text-based detection
+                found = pg.find_tables(table_settings={
+                    "vertical_strategy": "lines",
+                    "horizontal_strategy": "lines",
+                })
+
+                if found:
+                    page_table_bboxes[pg_num] = [t.bbox for t in found]
+                    page_tables[pg_num] = []
+                    for t in found:
+                        if not t.extract():
+                            continue
+                        table_md = self._table_to_markdown(t.extract())
+                        x0, top, x1, bottom = t.bbox
+                        page_height = pg.height
+
+                        # Read 40pt above the table border
+                        above_text = ''
+                        if top > 0:
+                            above_region = pg.crop((x0, max(0, top - 40), x1, top))
+                            above_text = (above_region.extract_text() or '').strip()
+
+                        # Read 40pt below the table border
+                        below_text = ''
+                        if bottom < page_height:
+                            below_region = pg.crop((x0, bottom, x1, min(page_height, bottom + 40)))
+                            below_text = (below_region.extract_text() or '').strip()
+
+                        # Pick whichever contains a table/figure title keyword
+                        title = ''
+                        for candidate in [above_text, below_text]:
+                            if any(kw in candidate for kw in ('Table', 'Figure', 'table', 'figure')):
+                                title = candidate
+                                break
+
+                        if title:
+                            table_md = f"{title}\n{table_md}"
+
+                        page_tables[pg_num].append(table_md)
+
+
+
         in_toc = False
         toc_end_page = 0
-        
+        toc_found = False
         for page_num, page in enumerate(doc, start=1):
-            text = page.get_text()
+
+            # Get text as blocks with coordinates so we can filter table regions
+            bboxes_to_exclude = page_table_bboxes.get(page_num, [])
+
+            if not bboxes_to_exclude:
+                text = page.get_text()
+            else:
+                # Collect only text blocks that don't overlap with any table bbox
+                prose_parts = []
+                for block in page.get_text("blocks"):
+                    # block = (x0, y0, x1, y1, text, block_no, block_type)
+                    bx0, by0, bx1, by1, block_text, _, block_type = block
+                    if block_type != 0:   # 0 = text block, 1 = image — skip images
+                        continue
+                    if not self._overlaps_any(bx0, by0, bx1, by1, bboxes_to_exclude):
+                        prose_parts.append(block_text)
+                text = "\n".join(prose_parts)
+
             lines = text.split('\n')
+
             
             # Detect TOC
             page_text_upper = text.upper()
-            if 'TABLE OF CONTENTS' in page_text_upper:
+            if 'TABLE OF CONTENTS' in page_text_upper and not toc_found:
                 in_toc = True
-                toc_end_page = page_num + 2
+                toc_found = True  # prevents any re-triggering on later pages
+                toc_end_page = page_num + 1
                 print(f"📋 Detected Table of Contents on page {page_num}")
             
             # Skip TOC pages
@@ -72,9 +160,36 @@ class PDFParser:
             else:
                 in_toc = False
             
+            # Inject structured table chunks before processing prose on this page.
+            if page_num in page_tables:
+                for table_md in page_tables[page_num]:
+
+                    if current_section['text'].strip():
+                        current_section['page_end'] = page_num
+                        sections.append(current_section.copy())
+                        current_section = {
+                            **current_section,
+                            'text': '',
+                            'page_start': page_num,
+                            'chunk_type': 'text'
+                        }
+
+                    sections.append({
+                        'section': current_section['section'],
+                        'section_title': current_section['section_title'],
+                        'text': table_md,  # merged
+                        'page_start': page_num,
+                        'page_end': page_num,
+                        'chunk_type': 'table'
+                    })
+                    print(f"📊 Injected table chunk in section "
+                        f"{current_section['section']} (page {page_num})")
+
+
             # Process lines
             i = 0
             while i < len(lines):
+
                 line = lines[i].strip()
                 
                 if not line:
@@ -114,11 +229,13 @@ class PDFParser:
                     print(f"✓ Found section: {full_section_id} - {section_title} (page {page_num})")
                     
                     current_section = {
-                        'section': full_section_id,  # Use hierarchical ID
+                        'section': full_section_id,
                         'section_title': section_title,
                         'text': '',
-                        'page_start': page_num
+                        'page_start': page_num,
+                        'chunk_type': 'text'
                     }
+
                     
                     # Skip merged lines
                     if len(line) < 10 and i + 1 < len(lines):
@@ -186,8 +303,11 @@ class PDFParser:
                 section_title = re.sub(r'\s*\(SEE SECTION[^)]+\)', '', section_title, flags=re.IGNORECASE)
                 section_title = section_title.strip()
                 
+                
+                # Q/A patterns skip heading validation — they are always sections
+                is_qa = re.match(r'^[QA]\d+$', section_num)
                 # Validate it looks like a heading
-                if self._looks_like_heading(line, section_title):
+                if is_qa or self._looks_like_heading(line, section_title):
                     return (section_num, section_title)
         
         return None
@@ -322,14 +442,56 @@ class PDFParser:
         if not title or len(title) < 2:
             return False
         
-        # Check capitalization (at least 40% of words should start with capital)
+        # Headings are short — long sentences are body text, not headings
         words = title.split()
+        if len(words) > 12:
+            return False
+
+        # Check capitalization (at least 40% of words should start with capital)
         if len(words) > 2:
             capitalized = sum(1 for w in words if w and w[0].isupper())
             if capitalized / len(words) < 0.4:
                 return False
         
         return True
+
+
+    def _table_to_markdown(self, table: list) -> str:
+        if not table or not table[0]:
+            return ""
+
+        def clean(cell):
+            if cell is None:
+                return ""
+            return str(cell).replace("\n", " ").strip()
+
+        # Find the first row that has at least 50% non-empty cells — use as header
+        header_idx = 0
+        for i, row in enumerate(table):
+            filled = sum(1 for c in row if clean(c))
+            if filled >= len(row) * 0.5:
+                header_idx = i
+                break
+
+        header = [clean(c) for c in table[header_idx]]
+        data_rows = table[header_idx + 1:]
+
+        rows = []
+        rows.append('| ' + ' | '.join(header) + ' |')
+        rows.append('|' + '|'.join(['---'] * len(header)) + '|')
+
+        for row in data_rows:
+            cleaned = [clean(c) for c in row]
+            while len(cleaned) < len(header):
+                cleaned.append('')
+            cleaned = cleaned[:len(header)]
+            if any(cleaned):  # skip fully empty rows
+                rows.append('| ' + ' | '.join(cleaned) + ' |')
+
+        return '\n'.join(rows)
+
+
+
     
     def extract_metadata(self, pdf_path: Path) -> Dict[str, str]:
         """Extract PDF metadata."""

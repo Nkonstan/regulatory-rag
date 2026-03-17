@@ -3,7 +3,7 @@ Document processing service.
 
 Handles all business logic for PDF ingestion and processing.
 """
-
+import re
 import json
 from pathlib import Path
 from typing import List, Dict, Set
@@ -20,7 +20,14 @@ logger = logging.getLogger(__name__)
 
 class DocumentService:
     """Service for managing document ingestion and processing."""
-    
+    BOILERPLATE_PHRASES = [
+    "recommended for adoption to the regulatory bodies",
+    "does not operate to bind fda",
+    "not create or confer any rights",
+    "you can use an alternative approach if the approach satisfies",
+    ]
+
+    MIN_CHUNK_TOKENS = 15
     def __init__(self):
         """Initialize document service."""
         logger.info("⏳ Initializing document service...")
@@ -32,6 +39,31 @@ class DocumentService:
 
         self.tracking_file = settings.upload_dir / ".processed_files.json"
         logger.info("✅ Document service ready")
+
+
+    def _filter_boilerplate(self, chunks: List[Dict]) -> List[Dict]:
+        filtered = []
+        for chunk in chunks:
+            
+            if re.match(r'^Q\d+$', chunk.get('section', '')):
+                logger.info(f"Filtered Q section: {chunk['section']}")  # changed to info
+                continue
+            
+            text_normalized = ' '.join(chunk['text'].lower().split())
+            
+            if chunk.get('chunk_type') != 'table' and \
+            self.chunker.count_tokens(chunk['text']) < self.MIN_CHUNK_TOKENS:
+                logger.info(f"Filtered short chunk ...")
+                continue
+            
+            if any(phrase in text_normalized for phrase in self.BOILERPLATE_PHRASES):
+                logger.info(f"Filtered boilerplate ({chunk['section']}): {chunk['text'][:80]}")  # changed to info
+                continue
+            
+            filtered.append(chunk)
+        
+        logger.info(f"Boilerplate filter: {len(chunks)} → {len(filtered)} chunks")
+        return filtered
     
     def load_processed_files(self) -> Set[str]:
         """
@@ -93,6 +125,8 @@ class DocumentService:
             chunks = self.chunker.chunk_sections(sections)
             logger.info(f"Created {len(chunks)} chunks from {file_path.name}")
             
+            chunks = self._filter_boilerplate(chunks)
+
             # Step 3: Generate embeddings
             logger.debug(f"Generating embeddings for {len(chunks)} chunks")
             texts = [chunk['text'] for chunk in chunks]

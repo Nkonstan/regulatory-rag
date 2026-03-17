@@ -105,58 +105,73 @@ class LLMService:
 
     
     def _build_context(self, chunks: List[Dict]) -> str:
-        """Build context string from retrieved chunks."""
+        """Build context string from retrieved chunks, with type-aware formatting."""
         context_parts = []
-        
+
         for i, chunk in enumerate(chunks, 1):
             section_info = f"[Section {chunk['section']}: {chunk.get('section_title', 'N/A')}]"
-            context_parts.append(f"{section_info}\n{chunk['chunk']}\n")
-        
+            chunk_type = chunk.get('metadata', {}).get('chunk_type', 'text')
+
+            if chunk_type == 'table':
+                header = (
+                    f"{section_info} "
+                    f"[STRUCTURED TABLE — row 1 contains the column headers; "
+                    f"read every subsequent row by matching each cell to its column header]"
+                )
+                context_parts.append(f"{header}\n{chunk['chunk']}\n")
+            else:
+                context_parts.append(f"{section_info}\n{chunk['chunk']}\n")
+
         return "\n".join(context_parts)
+
 
     def _create_prompt(self, question: str, context: str) -> str:
         """Create prompt for LLM."""
         prompt = f"""You are a pharmaceutical regulatory expert assistant. Answer based ONLY on the provided context from FDA/ICH regulatory documents.
 
+
     Context (ranked by relevance):
     {context}
 
+
     Question: {question}
 
+
     Instructions:
-    1. Chunks are ordered by relevance - prioritize information from TOP chunks
-    2. Read the question carefully to understand what is specifically being asked, then verify which chunk directly answers that specific question
-    3. Answer directly using ONLY information from the context
-    4. Cite the specific section (e.g., "According to Section III.A.1...")
-    5. If context is insufficient, say "Based on the provided documents, I cannot fully answer this question"
+    1. Chunks are ordered by relevance - prioritize information from TOP chunks.
+    2. Read the question carefully to understand what is specifically being asked, then verify which chunk directly answers that specific question.
+    3. Answer directly using ONLY information from the context.
+    4. Cite the specific section (e.g., "According to Section 3.0, Table 1...").
+    5. For any chunk labelled [STRUCTURED TABLE]: the first row is the column header row. For each data row, read the value under each column by matching the cell position to the header. Do NOT state any cell value that is not explicitly written in the table — never infer or guess.
+    6. When a question asks about a table, you MUST enumerate EVERY column and EVERY row relevant to the question. Do not summarize, do not stop early, do not say "etc." — list all values explicitly.
+    7. If context is insufficient, say "Based on the provided documents, I cannot fully answer this question."
+
 
     Answer:"""
         return prompt
 
+
+
     
     def _calculate_confidence(self, chunks: List[Dict]) -> float:
         """
-        Calculate confidence score based on retrieval quality.
-        
-        Args:
-            chunks: Retrieved chunks with relevance scores
-        
-        Returns:
-            Confidence score between 0 and 1
+        Compute retrieval confidence from already-scaled [0, 1] relevance scores.
+
+        Since relevance is now scaled in _merge_results (1.0 = ranked #1 in both
+        retrievers), this function can work directly with the values as-is.
+
+        The formula weights average relevance (breadth — are all chunks decent?)
+        and top relevance (strength — is the best chunk genuinely strong?).
+        Both must be high for confidence to be high.
         """
         if not chunks:
             return 0.0
-        
-        # Average relevance of top chunks
+
         relevances = [chunk['relevance'] for chunk in chunks]
-        avg_relevance = sum(relevances) / len(relevances)
-        
-        # Boost if top result is very relevant
-        top_relevance = relevances[0] if relevances else 0
-        
-        # Confidence formula
-        confidence = (avg_relevance * 0.6) + (top_relevance * 0.4)
-        
+
+        top_score = relevances[0]                          # best chunk
+        confidence = sum(relevances) / len(relevances)      
+
         return round(min(confidence, 1.0), 2)
     
     def _extractive_answer(self, question: str, chunks: List[Dict]) -> Dict[str, any]:

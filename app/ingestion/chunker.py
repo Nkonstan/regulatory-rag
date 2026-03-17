@@ -33,9 +33,26 @@ class SectionChunker:
             
             # Token count for this section
             tokens = self.encoding.encode(section_text)
+
+            # Table chunks must never be split across token boundaries.
+            # Splitting mid-row destroys the column-cell relationship entirely.
+            if section.get('chunk_type') == 'table':
+                chunks.append({
+                    'text': section_text,
+                    'section': section['section'],
+                    'section_title': section['section_title'],
+                    'page_start': section.get('page_start'),
+                    'page_end': section.get('page_end'),
+                    'chunk_index': 0,
+                    'total_chunks': 1,
+                    'sections_list': [section['section']],
+                    'section_titles_list': [section['section_title']],
+                    'section_count': 1,
+                    'chunk_type': 'table'
+                })
+                continue
             
             if len(tokens) <= self.chunk_size:
-                # Section fits in one chunk - use parser's section assignment
                 chunk = {
                     'text': section_text,
                     'section': section['section'],
@@ -46,9 +63,12 @@ class SectionChunker:
                     'total_chunks': 1,
                     'sections_list': [section['section']],
                     'section_titles_list': [section['section_title']],
-                    'section_count': 1
+                    'section_count': 1,
+                    'chunk_type': 'text'
                 }
+
                 chunks.append(chunk)
+
                 
             else:
                 # Split section into multiple chunks
@@ -64,7 +84,7 @@ class SectionChunker:
                     chunk['sections_list'] = [section['section']]
                     chunk['section_titles_list'] = [section['section_title']]
                     chunk['section_count'] = 1
-                
+                    chunk['chunk_type'] = 'text'
                 chunks.extend(section_chunks)
         
         return chunks
