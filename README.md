@@ -1,4 +1,4 @@
-# NikosKonstantinou-pfizer-ai-engineer-assignment
+# regulatory-rag
 
 A **Retrieval-Augmented Generation (RAG)** system for querying pharmaceutical regulatory documents using natural language. Built with FastAPI, ChromaDB, and Ollama for local, GPU-accelerated document Q&A.
 
@@ -44,8 +44,8 @@ Key metrics:
 
 1. **Clone and prepare data**
    ```bash
-   git clone https://github.com/Nkonstan/NikosKonstantinou-pfizer-ai-engineer-assignment.git
-   cd NikosKonstantinou-pfizer-ai-engineer-assignment
+   git clone https://github.com/Nkonstan/regulatory-rag.git
+   cd regulatory-rag
    
    # Place your PDFs for auto-indexing
    mkdir -p data/uploads
@@ -86,10 +86,12 @@ docker compose logs -f ollama
 ## API Usage
 
 ### Upload PDF (manual)
-```curl -X POST http://localhost:8000/api/ingest \
+```bash
+curl -X POST http://localhost:8000/api/ingest \
   -F "file=@document.pdf" \
   -v
 ```
+
 
 Response:
 ```json
@@ -196,10 +198,22 @@ SEMANTIC_WEIGHT=0.6
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
+## Table & Figure Handling
+
+Tables and flowchart figures (e.g., decision trees built from bordered cells) are
+detected by pdfplumber and processed separately from prose:
+
+- Each table is extracted as a standalone chunk with `chunk_type: "table"`
+- A 40pt region above and below each table border is scanned to extract the
+  caption ("Table 1. ...", "Figure 1: ...") and prepend it to the markdown
+- Table content is excluded from prose chunks to prevent duplication
+- The LLM prompt includes explicit cell-reading rules for structured tables
+
+
 ## Project Structure
 
 ```
-NikosKonstantinou-pfizer-ai-engineer-assignment/
+regulatory-rag/
 ├── docker-compose.yml          # Multi-service orchestration
 ├── Dockerfile                  # API container
 ├── requirements.txt            # Python dependencies

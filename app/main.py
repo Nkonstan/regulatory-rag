@@ -41,6 +41,35 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/api/debug/chunks")
+async def debug_chunks():
+    results = vector_store.collection.get(
+        include=['metadatas']
+    )
+    sections = [m['section'] for m in results['metadatas']]
+    return {"total": len(sections), "sections": sorted(set(sections))}
+
+
+@app.get("/debug/tables")
+def debug_tables():
+    results = vector_store.collection.get(
+        where={"chunk_type": "table"},
+        include=["documents", "metadatas"]
+    )
+    return {
+        "count": len(results["ids"]),
+        "chunks": [
+            {
+                "id": results["ids"][i],
+                "section": results["metadatas"][i]["section"],
+                "text_length": len(results["documents"][i]),
+                "full_text": results["documents"][i]  # ← changed from text_preview
+            }
+            for i in range(len(results["ids"]))
+        ]
+    }
+
+
 
 @app.on_event("startup")
 async def startup_event():

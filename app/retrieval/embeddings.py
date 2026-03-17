@@ -64,16 +64,19 @@ class EmbeddingService:
         """
         Generate embedding for a single query.
         
-        Args:
-            query: Query string
-        
-        Returns:
-            Embedding vector
+        NOTE: mxbai-embed-large-v1 is an asymmetric model trained with a
+        task prefix on the query side only. Documents are embedded as-is,
+        but queries must use this prefix or similarity scores will be flat
+        and undifferentiated.
         """
         if not self.model:
             raise RuntimeError("Embedding model not loaded")
+        
+        # Required prefix for mxbai-embed-large-v1 query embeddings
+        prefixed_query = f"Represent this sentence for searching relevant passages: {query}"
+        
         logger.debug(f"🔍 Generating query embedding: {query[:50]}...")
-        embedding = self.model.encode(query, convert_to_numpy=True)
+        embedding = self.model.encode(prefixed_query, convert_to_numpy=True)
         return embedding.tolist()
     
     def get_dimension(self) -> int:

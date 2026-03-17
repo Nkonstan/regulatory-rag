@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class VectorStore:
     """Vector store using ChromaDB + BM25 for hybrid retrieval."""
-    
+    STRUCTURAL_KEYWORDS = {'table', 'figure', 'flowchart', 'chart', 'diagram', 'decision tree'}
     def __init__(self):
         self.client = None
         self.collection = None
@@ -131,7 +131,8 @@ class VectorStore:
                 'page_start': chunk.get('page_start', 0),
                 'page_end': chunk.get('page_end', 0),
                 'chunk_index': chunk['chunk_index'],
-                'total_chunks': chunk['total_chunks']
+                'total_chunks': chunk['total_chunks'],
+                'chunk_type': chunk.get('chunk_type', 'text')
             }
             
             # Add section lists if they exist
@@ -162,7 +163,8 @@ class VectorStore:
                 'total_chunks': chunk['total_chunks'],
                 'sections_all': metadata['sections_all'],
                 'section_titles_all': metadata['section_titles_all'],
-                'section_count': metadata['section_count']
+                'section_count': metadata['section_count'],
+                'chunk_type': chunk.get('chunk_type', 'text')
             })
         
         # Add to ChromaDB
@@ -210,19 +212,7 @@ class VectorStore:
                 })
         
         return results
-    
-    def _normalize_scores(self, scores: List[float]) -> List[float]:
-        """Normalize scores to [0, 1] range."""
-        if not scores:
-            return []
-        
-        min_score = min(scores)
-        max_score = max(scores)
-        
-        if max_score == min_score:
-            return [1.0] * len(scores)
-        
-        return [(s - min_score) / (max_score - min_score) for s in scores]
+
     
     def query(
         self, 
@@ -240,77 +230,103 @@ class VectorStore:
             List of results with metadata
         """
         top_k = top_k or settings.top_k
-        
-        # DEBUG: Print query info
+
+        # Expand the retrieval pool when the query targets a structural artifact.
+        is_structural = any(kw in query_text.lower() for kw in self.STRUCTURAL_KEYWORDS)
+        effective_k = top_k + 3 if is_structural else top_k
+
         print(f"\n🔍 DEBUG - Query: '{query_text}'")
-        print(f"🔍 DEBUG - Requested top_k: {top_k}")
+        print(f"🔍 DEBUG - Structural query: {is_structural}, effective_k: {effective_k}")
         print(f"🔍 DEBUG - Similarity threshold: {settings.similarity_threshold}")
         print(f"🔍 DEBUG - Hybrid search: {settings.use_hybrid_search}")
+
         
         if not settings.use_hybrid_search or not self.bm25_index:
-            # Fallback to pure semantic search
             print("🔍 DEBUG - Using pure semantic search")
-            return self._semantic_search_only(query_text, top_k)
-        
+            return self._semantic_search_only(query_text, effective_k)[:top_k]
+
         # === HYBRID SEARCH ===
-        
-        # 1. BM25 Search
+
         print("🔍 DEBUG - Running BM25 search...")
-        bm25_results = self._bm25_search(query_text, top_k)
+        bm25_results = self._bm25_search(query_text, effective_k)
         print(f"🔍 DEBUG - BM25 found {len(bm25_results)} results")
-        
-        # 2. Semantic Search
+
         print("🔍 DEBUG - Running semantic search...")
         query_embedding = embedding_service.embed_query(query_text)
-        
+
         semantic_results = self.collection.query(
             query_embeddings=[query_embedding],
-            n_results=top_k * 2,  # Get more for merging
+            n_results=effective_k * 2,
             include=['documents', 'metadatas', 'distances']
         )
-        
+
         print(f"🔍 DEBUG - Semantic found {len(semantic_results['ids'][0]) if semantic_results['ids'] else 0} results")
-        
-        # 3. Merge and Re-rank
+
         combined_results = self._merge_results(
-            bm25_results, 
+            bm25_results,
             semantic_results,
-            query_text
+            query_text,
+            is_structural=is_structural
         )
-        
-        # 4. Filter by similarity threshold and limit to top_k
+
         filtered_results = [
-            r for r in combined_results 
+            r for r in combined_results
             if r['relevance'] >= settings.similarity_threshold
         ][:top_k]
+
         
         print(f"🔍 DEBUG - Final results after filtering: {len(filtered_results)}\n")
         
         return filtered_results
     
     def _merge_results(
-        self, 
+        self,
         bm25_results: List[Dict],
         semantic_results: Dict,
-        query_text: str
+        query_text: str,
+        is_structural: bool = False
     ) -> List[Dict]:
         """
-        Merge BM25 and semantic results with weighted scoring.
+        Merge BM25 and semantic results using Reciprocal Rank Fusion (RRF).
+        
+        Instead of normalizing raw scores (which is sensitive to score distribution
+        and pool size), RRF works purely on rank positions. Each document gets a
+        score of 1 / (K + rank) from each retriever, where K=60 is a constant that
+        dampens the impact of very high ranks. These per-retriever RRF scores are
+        then combined with the configured BM25/semantic weights.
+        
+        Example for a document ranked 1st in semantic, 5th in BM25 (K=60):
+            semantic_rrf = 1 / (60 + 1) = 0.01639
+            bm25_rrf     = 1 / (60 + 5) = 0.01538
+            combined     = 0.4 * 0.01538 + 0.6 * 0.01639 = 0.01598
+
+        A document missing from one retriever gets 0.0 for that retriever's
+        contribution, cleanly distinguishing "absent" from "ranked last".
+
+        Args:
+            bm25_results: Ranked list of dicts from BM25 search, each with 'id', 'score', 'metadata'
+            semantic_results: Raw ChromaDB query response with 'ids', 'distances', 'documents', 'metadatas'
+            query_text: Original query string (unused in scoring, kept for potential future use)
         
         Returns:
-            Sorted list of results by combined score
+            List of result dicts sorted by combined RRF score, each with
+            'document', 'chunk', 'section', 'section_title', 'relevance', 'metadata'.
+            Relevance is scaled to [0, 1] where 1.0 = ranked #1 in both retrievers.
         """
-        # Build score maps
+        # --- Step 1: Build raw score maps ---
+        # bm25_scores preserves insertion order (Python 3.7+), which reflects BM25 rank
         bm25_scores = {r['id']: r['score'] for r in bm25_results}
         
+        # semantic_scores similarly preserves ChromaDB's rank order (closest distance first)
         semantic_scores = {}
-        semantic_data = {}
+        semantic_data = {}  # also store the actual text + metadata for later retrieval
         
         if semantic_results['ids'] and semantic_results['ids'][0]:
             for i in range(len(semantic_results['ids'][0])):
                 doc_id = semantic_results['ids'][0][i]
                 
-                # Convert cosine distance to similarity
+                # ChromaDB returns cosine *distance* in [0, 2], convert to similarity in [0, 1]
+                # distance=0 means identical vectors, distance=2 means opposite
                 distance = semantic_results['distances'][0][i]
                 similarity = 1 - (distance / 2)
                 
@@ -320,41 +336,60 @@ class VectorStore:
                     'metadata': semantic_results['metadatas'][0][i]
                 }
         
-        # Normalize scores separately
-        bm25_score_values = list(bm25_scores.values())
-        semantic_score_values = list(semantic_scores.values())
-        
-        bm25_normalized = dict(zip(
-            bm25_scores.keys(),
-            self._normalize_scores(bm25_score_values)
-        )) if bm25_score_values else {}
-        
-        semantic_normalized = dict(zip(
-            semantic_scores.keys(),
-            self._normalize_scores(semantic_score_values)
-        )) if semantic_score_values else {}
-        
-        # Combine all unique document IDs
-        all_ids = set(bm25_scores.keys()) | set(semantic_scores.keys())
-        
-        # Calculate weighted combined scores
+        # --- Step 2: Convert score-ordered dicts into rank maps ---
+        # enumerate() gives 0-based positions, +1 makes them 1-indexed ranks
+        # Rank 1 = best result, rank 2 = second best, etc.
+        bm25_ranks = {doc_id: rank + 1 for rank, doc_id in enumerate(bm25_scores.keys())}
+        semantic_ranks = {doc_id: rank + 1 for rank, doc_id in enumerate(semantic_scores.keys())}
+
+        # --- Step 3: Compute RRF scores ---
+        # K=60 is the standard constant from the original RRF paper (Cormack et al., 2009).
+        # It prevents the highest-ranked document from dominating too strongly.
+        K = 60
+
+        # Theoretical maximum RRF score: a document ranked #1 in both retrievers.
+        # = bm25_weight * 1/(K+1) + semantic_weight * 1/(K+1)
+        # = 1/(K+1) since weights sum to 1.0
+        # Used to scale final relevance scores to a human-readable [0, 1] range.
+        theoretical_max = 1.0 / (K + 1)  # ≈ 0.01639
+
+        # Union of all doc IDs seen by either retriever
+        all_ids = set(bm25_ranks.keys()) | set(semantic_ranks.keys())
+
         combined = []
         for doc_id in all_ids:
-            bm25_score = bm25_normalized.get(doc_id, 0.0)
-            semantic_score = semantic_normalized.get(doc_id, 0.0)
-            
-            # Weighted combination
+            # If a doc was not found by a retriever, its contribution is 0.0
+            # (not penalized, just absent — unlike min-max where "absent" == "worst found")
+            bm25_score = 1.0 / (K + bm25_ranks[doc_id]) if doc_id in bm25_ranks else 0.0
+            semantic_score = 1.0 / (K + semantic_ranks[doc_id]) if doc_id in semantic_ranks else 0.0
+
+            # Weighted combination using configured BM25/semantic weights (default 0.4 / 0.6)
             combined_score = (
                 settings.bm25_weight * bm25_score +
                 settings.semantic_weight * semantic_score
             )
+
+            # When the query explicitly targets a structural artifact, boost
+            # table/figure chunks by 40% so they outrank prose chunks that
+            # only mention the table by name.
+            chunk_meta = semantic_data.get(doc_id, {}).get('metadata', {})
+            if not chunk_meta:
+                bm25_item = next((r for r in bm25_results if r['id'] == doc_id), None)
+                if bm25_item:
+                    chunk_meta = bm25_item['metadata']
+            if is_structural and chunk_meta.get('chunk_type') in ('table', 'figure'):
+                combined_score *= 1.4
+
+            scaled_relevance = round(min(combined_score / theoretical_max, 1.0), 3)
+
             
-            # Get document data (prefer semantic as it has ChromaDB metadata)
+            # --- Step 4: Resolve document text and metadata ---
+            # Prefer semantic_data since it comes directly from ChromaDB with full metadata.
+            # Fall back to BM25 metadata for docs that only appeared in keyword search.
             if doc_id in semantic_data:
                 doc_text = semantic_data[doc_id]['document']
                 metadata = semantic_data[doc_id]['metadata']
             else:
-                # Fallback to BM25 metadata
                 bm25_item = next((r for r in bm25_results if r['id'] == doc_id), None)
                 if bm25_item:
                     doc_text = bm25_item['metadata']['text']
@@ -362,19 +397,18 @@ class VectorStore:
                 else:
                     continue
             
-            # Debug output
-            print(f"🔍 DEBUG - {doc_id[:30]}... BM25={bm25_score:.3f}, Semantic={semantic_score:.3f}, Combined={combined_score:.3f}")
+            print(f"🔍 DEBUG - {doc_id[:30]}... BM25_rank={bm25_ranks.get(doc_id, 'N/A')}, Semantic_rank={semantic_ranks.get(doc_id, 'N/A')}, Relevance={scaled_relevance:.3f}")
             
             combined.append({
                 'document': metadata.get('document', 'unknown'),
                 'chunk': doc_text,
                 'section': metadata.get('section', ''),
                 'section_title': metadata.get('section_title', ''),
-                'relevance': round(combined_score, 3),
-                'metadata': metadata  # Include full metadata
+                'relevance': scaled_relevance,  # [0, 1] scaled
+                'metadata': metadata
             })
         
-        # Sort by combined score
+        # --- Step 5: Sort by combined RRF score descending ---
         combined.sort(key=lambda x: x['relevance'], reverse=True)
         
         return combined
