@@ -159,17 +159,13 @@ class LLMService:
 
         Since relevance is now scaled in _merge_results (1.0 = ranked #1 in both
         retrievers), this function can work directly with the values as-is.
-
-        The formula weights average relevance (breadth — are all chunks decent?)
-        and top relevance (strength — is the best chunk genuinely strong?).
-        Both must be high for confidence to be high.
+        
         """
         if not chunks:
             return 0.0
 
         relevances = [chunk['relevance'] for chunk in chunks]
 
-        top_score = relevances[0]                          # best chunk
         confidence = sum(relevances) / len(relevances)      
 
         return round(min(confidence, 1.0), 2)
