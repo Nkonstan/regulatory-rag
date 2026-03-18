@@ -6,6 +6,7 @@ from pathlib import Path
 from rank_bm25 import BM25Okapi
 import numpy as np
 import logging
+import re
 
 from app.config import settings
 from app.retrieval.embeddings import embedding_service
@@ -55,10 +56,17 @@ class VectorStore:
             raise
     
     def _tokenize(self, text: str) -> List[str]:
-        """Simple tokenization for BM25."""
-        # Lowercase and split on whitespace/punctuation
-        tokens = text.lower().split()
-        return tokens
+        # Strip punctuation, lowercase, remove stopwords
+        text = text.lower()
+        tokens = re.findall(r'\b[a-z][a-z0-9]*\b', text)
+        stopwords = {
+            'the','a','an','is','are','was','were','be','been',
+            'being','have','has','had','do','does','did','will',
+            'would','could','should','may','might','of','in',
+            'to','for','on','at','by','with','from','that','this',
+            'or','and','not','it','its','as','such','if','but'
+        }
+        return [t for t in tokens if t not in stopwords]
     
     def _save_bm25_index(self):
         """Save BM25 index to disk."""
@@ -199,7 +207,7 @@ class VectorStore:
         scores = self.bm25_index.get_scores(query_tokens)
         
         # Get top-k indices
-        top_indices = np.argsort(scores)[::-1][:top_k * 2]  # Get 2x for merging
+        top_indices = np.argsort(scores)[::-1][:top_k]
         
         # Format results
         results = []
@@ -214,52 +222,56 @@ class VectorStore:
         return results
 
     
-    def query(
-        self, 
-        query_text: str, 
-        top_k: int = None
-    ) -> List[Dict]:
+    def query(self, query_text: str, top_k: int = None) -> List[Dict]:
         """
-        Query using hybrid BM25 + semantic search.
-        
+        Query using hybrid BM25 + semantic search with Reciprocal Rank Fusion (RRF).
+
+        Retrieves candidates from both BM25 and semantic search using an equal-sized
+        pool, merges them via RRF, and returns the top_k results.
+
+        For queries targeting structural artifacts (tables, figures, etc.), the
+        retrieval pool is expanded by 3 extra candidates to improve recall of
+        sparse table/figure chunks, which tend to rank lower in both retrievers.
+
         Args:
-            query_text: Query string
-            top_k: Number of results to return
-        
+            query_text: The natural language query string.
+            top_k: Number of final results to return. Defaults to settings.top_k.
+
         Returns:
-            List of results with metadata
+            List of result dicts sorted by RRF relevance score (descending),
+            each containing 'document', 'chunk', 'section', 'relevance', 'metadata'.
         """
         top_k = top_k or settings.top_k
 
-        # Expand the retrieval pool when the query targets a structural artifact.
+        # Expand pool for structural queries (tables, figures, etc.)
         is_structural = any(kw in query_text.lower() for kw in self.STRUCTURAL_KEYWORDS)
         effective_k = top_k + 3 if is_structural else top_k
 
         print(f"\n🔍 DEBUG - Query: '{query_text}'")
         print(f"🔍 DEBUG - Structural query: {is_structural}, effective_k: {effective_k}")
-        print(f"🔍 DEBUG - Similarity threshold: {settings.similarity_threshold}")
-        print(f"🔍 DEBUG - Hybrid search: {settings.use_hybrid_search}")
 
-        
+        # Fall back to pure semantic search if hybrid is disabled or BM25 not loaded
         if not settings.use_hybrid_search or not self.bm25_index:
             print("🔍 DEBUG - Using pure semantic search")
             return self._semantic_search_only(query_text, effective_k)[:top_k]
 
         # === HYBRID SEARCH ===
 
+        # Use a fixed equal pool size for both retrievers to ensure
+        # RRF rank positions are comparable across both lists
+        pool_size = max(effective_k * 3, 20)
+
         print("🔍 DEBUG - Running BM25 search...")
-        bm25_results = self._bm25_search(query_text, effective_k)
+        bm25_results = self._bm25_search(query_text, pool_size)
         print(f"🔍 DEBUG - BM25 found {len(bm25_results)} results")
 
         print("🔍 DEBUG - Running semantic search...")
         query_embedding = embedding_service.embed_query(query_text)
-
         semantic_results = self.collection.query(
             query_embeddings=[query_embedding],
-            n_results=effective_k * 2,
+            n_results=pool_size,  # same pool_size as BM25 for symmetric RRF ranking
             include=['documents', 'metadatas', 'distances']
         )
-
         print(f"🔍 DEBUG - Semantic found {len(semantic_results['ids'][0]) if semantic_results['ids'] else 0} results")
 
         combined_results = self._merge_results(
@@ -269,15 +281,14 @@ class VectorStore:
             is_structural=is_structural
         )
 
-        filtered_results = [
-            r for r in combined_results
-            if r['relevance'] >= settings.similarity_threshold
-        ][:top_k]
+        # No threshold applied — RRF already ranks by quality.
+        # Cutting at top_k is sufficient; a cosine-based threshold
+        # is incompatible with the scaled RRF relevance score.
+        final_results = combined_results[:top_k]
 
-        
-        print(f"🔍 DEBUG - Final results after filtering: {len(filtered_results)}\n")
-        
-        return filtered_results
+        print(f"🔍 DEBUG - Final results: {len(final_results)}\n")
+        return final_results
+
     
     def _merge_results(
         self,
