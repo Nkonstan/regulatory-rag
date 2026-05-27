@@ -88,3 +88,4 @@ def get_logger(name: str) -> logging.Logger:
         Configured logger instance
     """
     return logging.getLogger(name)
+

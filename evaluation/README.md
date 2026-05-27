@@ -1,156 +1,101 @@
 # RAG System Evaluation
-
 ## Overview
-
 Each evaluation contains 10 question–answer assessments scored across standardized regulatory-quality metrics.
-
-Total Evaluations Analyzed: 30 Questions
-Evaluation Methodology
-
-For each document, 10 questions were created for testing purposes. Claude was used to perform the evaluation of each response. To ensure evaluation integrity and avoid bias, a clean session was initiated for each set of 10 questions, preventing any influence from results of different or previous documents.
 
 **Total Evaluations Analyzed:** 30 Questions
 
+## Evaluation Methodology
+For each document, 10 questions were created for testing purposes. Claude was used to perform the evaluation of each response. To ensure evaluation integrity and avoid bias, a clean session was initiated for each set of 10 questions, preventing any influence from results of different or previous documents.
+
+---
+
 ## 1. Aggregated Metric Scores
+Scores are averaged across all 30 questions (3 evaluation sets of 10).
 
-### Average Scores (Across 30 Questions)
+| Metric | Set 1 (n=10) | Set 2 (n=10) | Set 3 (n=10) | **Aggregated (n=30)** |
+|---|---|---|---|---|
+| Correctness | 9.2 | 9.0 | 8.6 | **8.9 / 10** |
+| Groundedness ⚠️ | 9.0 | 9.1 | 8.9 | **9.0 / 10** |
+| Retrieval Quality | 9.4 | 10.0 | 8.0 | **9.1 / 10** |
+| Attribution | 8.8 | 9.3 | 8.0 | **8.7 / 10** |
+| Completeness | 8.5 | 9.1 | 8.1 | **8.6 / 10** |
 
-| Metric | E10 | ICD | E3 | Global Average |
-|--------|-----|-----|-----|----------------|
-| Correctness | 9.2 | 9.0 | 9.3 | 9.17 |
-| Groundedness | 9.4 | 9.5 | 9.3 | 9.40 |
-| Retrieval Quality | 9.0 | 8.7 | 9.2 | 8.97 |
-| Attribution | 9.3 | 9.0 | 8.7 | 9.00 |
-| Completeness | 9.2 | 8.7 | 9.3 | 9.07 |
+> ⚠️ Groundedness is flagged as a critical metric — it measures whether responses are anchored in retrieved source content rather than model-generated inference.
 
-### Key Observations
+---
 
-- Groundedness (9.40) is the strongest dimension.
-- Retrieval Quality (8.97) is the lowest-scoring metric.
-- Attribution performance shows minor inconsistency across documents.
+## 2. Pass / Marginal / Fail Rates
 
-## 2. Pass Rate Aggregation
+| Result | Set 1 | Set 2 | Set 3 | **Total (n=30)** |
+|---|---|---|---|---|
+| ✅ PASS | 7/10 (70%) | 10/10 (100%) | 7/10 (70%) | **24/30 (80.0%)** |
+| ⚠️ MARGINAL | 3/10 (30%) | 0/10 (0%) | 1/10 (10%) | **4/30 (13.3%)** |
+| ❌ FAIL | 0/10 (0%) | 0/10 (0%) | 2/10 (20%) | **2/30 (6.7%)** |
 
-### Overall Verdict Distribution (30 Questions)
+---
 
-| Verdict | Count | Percentage |
-|---------|-------|------------|
-| PASS | 24 | 80% |
-| MARGINAL | 3 | 10% |
-| FAIL | 3 | 10% |
+## 3. Failure Breakdown
 
-### Per-Document Breakdown
+| Failure Type | Set 1 | Set 2 | Set 3 | **Total (n=30)** |
+|---|---|---|---|---|
+| Hallucinations | 0 (0%) | 0 (0%) | 0 (0%) | **0/30 (0.0%)** ✅ |
+| Retrieval Failures | 1 (10%) | 0 (0%) | 2 (20%) | **3/30 (10.0%)** |
+| Attribution Errors | 0 (0%) | 0 (0%) | 2 (20%) | **2/30 (6.7%)** |
+| Factual Errors | 2 (20%) | 0 (0%) | 1 (10%) | **3/30 (10.0%)** |
+| Incomplete Answers | 2 (20%) | 0 (0%) | 2 (20%) | **4/30 (13.3%)** |
 
-| File | PASS | MARGINAL | FAIL |
-|------|------|----------|------|
-| E10 | 9 | 0 | 1 |
-| ICD | 6 | 3 | 1 |
-| E3 | 9 | 0 | 1 |
+Notable failure details from Set 3: Q4 produced a complete non-answer (critical retrieval failure); Q6 conflated consent and documentation exceptions, resulting in both a factual error and a wrong-section attribution error.
 
-## 3. Failure Analysis (30 Questions)
-
-| Failure Type | Count | Rate |
-|--------------|-------|------|
-| Hallucinations | 1 | 3.3% |
-| Retrieval Failures | 3 | 10% |
-| Attribution Errors | 2 | 6.7% |
-| Factual Errors | 2 | 6.7% |
-| Incomplete Answers | 3 | 10% |
-
-### Primary Risk Area
-
-- Retrieval failures represent the dominant failure category (10%).
-- Hallucination rate remains extremely low (3.3%).
+---
 
 ## 4. Context Sufficiency
 
-| Context Rating | Count | Rate |
-|----------------|-------|------|
-| YES | 26 | 86.7% |
-| PARTIAL | 2 | 6.7% |
-| NO | 2 | 6.7% |
+| Sufficiency | Set 1 | Set 2 | Set 3 | **Total (n=30)** |
+|---|---|---|---|---|
+| YES | 8/10 (80%) | 10/10 (100%) | 7/10 (70%) | **25/30 (83.3%)** |
+| PARTIAL | 2/10 (20%) | 0/10 (0%) | 2/10 (20%) | **4/30 (13.3%)** |
+| NO | 0/10 (0%) | 0/10 (0%) | 1/10 (10%) | **1/30 (3.3%)** |
 
-Most failures occurred despite sufficient context existing in the corpus, indicating retrieval or chunking limitations rather than missing source material.
+---
 
-## 5. Cross-Document Performance Patterns
+## 5. Critical Issues (Aggregated)
 
-### Strengths
+- **Zero hallucinations** detected across all 30 questions — the system never fabricated content not present in the source.
+- **Retrieval failures** occurred in 3 cases (10%), with one critical instance (Set 3, Q4) resulting in a complete non-answer.
+- **Factual/conflation errors** appeared in 3 cases (10%), typically on nuanced regulatory distinctions.
+- **Incomplete answers** were the most common failure mode (4 cases, 13.3%), often related to partial retrieval or over-compression of source details.
+- One cross-document retrieval confusion was observed in Set 1 due to a shared corpus with overlapping content.
 
-- Very low hallucination rate (3.3%)
-- High groundedness across all evaluations
-- Accurate preservation of regulatory language
-- Strong section-level attribution when retrieval succeeds
-- Conservative behavior when uncertain
+---
 
-### Weaknesses
+## 6. Strengths (Aggregated)
 
-#### 1. Structured Content Retrieval
+- Consistently strong direct alignment to source documents across all sets.
+- Excellent handling of straightforward regulatory questions.
+- Good citation discipline and source traceability overall.
+- High factual fidelity to regulatory guidance (FDA/ICH).
+- Retrieval quality peaked at a perfect 10.0 in Set 2, demonstrating the system's ceiling capability.
 
-Issues observed with:
+---
 
-- Enumerated lists
-- Section-number queries
-- Multi-level headings
-- Cross-referenced content
+## 7. Weaknesses (Aggregated)
 
-#### 2. Visual/Structural Element Retrieval
+- Minor errors on nuanced distinctions and comparative questions across Sets 1 and 3.
+- Occasional failure to surface the most relevant retrieved detail.
+- Some retrieval noise in shared corpus scenarios (Set 1).
+- Attribution granularity could be improved — subsection-level citations missing in some responses.
+- Table-based source content occasionally led to oversimplified conditional interpretations (Set 2).
 
-- Table vs. Figure confusion
-- Flowchart retrieval limitations
-- Hierarchical numbering misalignment
+---
 
+## 8. Production Readiness
 
-## 6. Production Readiness Summary
+| Threshold | Criterion | Status |
+|---|---|---|
+| ❌ NOT READY | >20% hallucination OR >30% retrieval failure | Not triggered |
+| ⚠️ NEEDS WORK | 10–20% hallucination OR 15–30% retrieval issues | Not triggered |
+| ✅ READY | <10% critical failures, appropriate for use case | **Met** |
 
-| Dimension | Assessment |
-|-----------|------------|
-| Hallucination Risk | Low |
-| Groundedness | High |
-| Retrieval Reliability | Moderate |
-| Regulatory Safety Profile | Strong |
+**Overall Assessment: ✅ READY FOR PRODUCTION**
 
-### Overall Assessment
-
-- High-quality RAG system with strong grounding and minimal hallucination risk.
-- Primary improvement area is retrieval engineering, particularly around structured regulatory content.
-
-
-## 7. Evaluation Methodology
-
-Evaluations were performed using a structured scoring framework applied via Claude 4.5.
-
-Each response was assessed across:
-
-- Correctness (0–10)
-- Groundedness (0–10)
-- Retrieval Quality (0–10)
-- Attribution Precision (0–10)
-- Completeness (0–10)
-- Context Sufficiency (YES / PARTIAL / NO)
-
-Critical failure categories:
-
-- Hallucination
-- Wrong Retrieval
-- Attribution Error
-- Factual Error
-- Incomplete Answer
-
-Each evaluation concludes with a structured production-readiness assessment.
-
-## 8. Global Performance Snapshot
-
-- **Correctness:** 9.17 / 10
-- **Groundedness:** 9.40 / 10
-- **Retrieval Quality:** 8.97 / 10
-- **Hallucination Rate:** 3.3%
-
-## Conclusion
-
-Across 30 regulatory-domain evaluations, the system demonstrates:
-
-- Strong factual reliability
-- High source faithfulness
-- Low hallucination risk
-- Moderate retrieval sensitivity to structural document features
-
+The system meets the production readiness threshold across all 30 evaluated questions. Zero hallucinations were detected, retrieval failures remain at 10%, and overall pass rate is 80%. The primary area for improvement before scaling is reducing incomplete answers and retrieval failures on edge-case regulatory questions.

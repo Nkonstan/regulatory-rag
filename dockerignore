@@ -20,3 +20,4 @@ data/uploads/*
 .pytest_cache
 .coverage
 htmlcov/
+
